@@ -322,7 +322,140 @@
         position: relative;
         z-index: 2;
     }
+/* ==========================================================================
+   CSS RESPONSIVE - Bắt đầu từ màn hình lớn xuống nhỏ
+   ========================================================================== */
 
+/* 1. Màn hình Laptop lớn (dưới 1600px) */
+@media (max-width: 1600px) {
+    .grid-container {
+        grid-template-columns: repeat(4, 1fr); /* Chuyển thành 4 cột */
+        gap: 30px;
+        padding: 40px;
+        width: 100%; /* Sử dụng toàn bộ chiều rộng */
+    }
+    main {
+        padding: 40px;
+    }
+    .page-title {
+        max-width: none; /* Bỏ giới hạn chiều rộng */
+        padding: 0 20px;
+    }
+}
+
+/* 2. Màn hình Laptop nhỏ & Tablet lớn (dưới 1200px) */
+@media (max-width: 1200px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr); /* Chuyển thành 3 cột */
+    }
+    .navbar {
+        height: 90px;
+    }
+    .title img {
+        height: 180px;
+    }
+    .logo img {
+        height: 80px;
+    }
+}
+
+/* 3. Màn hình Tablet (dưới 992px) */
+@media (max-width: 992px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr); /* Chuyển thành 2 cột */
+        gap: 25px;
+        padding: 30px;
+    }
+    main {
+        padding: 30px 20px;
+    }
+    .avatar-wrapper {
+        width: 130px;
+        height: 130px;
+    }
+    .card h3 {
+        font-size: 18px;
+    }
+    .info-section {
+        font-size: 13px;
+    }
+     .info-section p strong {
+        width: 70px; /* Thu nhỏ label */
+    }
+}
+
+/* 4. Màn hình Điện thoại (dưới 767px) */
+@media (max-width: 767px) {
+    body {
+        /* Cho phép cuộn dễ dàng hơn trên mobile */
+        -webkit-overflow-scrolling: touch; 
+    }
+    .navbar {
+        height: 80px;
+        padding: 0 16px;
+    }
+    .title img {
+        height: 150px;
+    }
+    .logo {
+       display: none; /* Ẩn logo VCB cho gọn */
+    }
+    main {
+        padding: 20px 15px;
+    }
+    .page-title {
+        font-size: 22px;
+        text-align: center;
+        margin: 0 0 20px 0;
+    }
+    .center-banner img {
+        max-width: 90%;
+        max-height: 80px;
+    }
+    .grid-container {
+        grid-template-columns: 1fr; /* Chuyển về 1 cột duy nhất */
+        gap: 20px;
+        padding: 20px;
+    }
+    .avatar-wrapper {
+        width: 120px;
+        height: 120px;
+    }
+    .card h3 {
+        font-size: 20px; /* Cho chữ to lại chút vì chỉ có 1 cột */
+    }
+    .info-section {
+        font-size: 14px;
+    }
+    footer {
+        font-size: 12px;
+        padding: 12px;
+        line-height: 1.5;
+    }
+}
+
+/* 5. Tinh chỉnh cho màn hình điện thoại rất nhỏ (dưới 480px) */
+@media (max-width: 480px) {
+     .navbar {
+        height: 70px;
+    }
+    .title img {
+        height: 130px;
+    }
+    main {
+        padding: 20px 10px;
+    }
+    .grid-container {
+        padding: 15px;
+        gap: 15px;
+    }
+    .card {
+        padding: 18px;
+    }
+    .page-title {
+        font-size: 19px;
+    }
+}
 </style>
 </head>
 

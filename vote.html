@@ -422,10 +422,193 @@
         background: rgba(0, 0, 0, .65); z-index: 3; position: relative;
     }
 
-    @media (max-width:1200px) { .layout-grid { grid-template-columns: 1fr; } }
-    @media (max-width:768px) { main { padding: 32px 20px 80px; } .idcard { grid-template-columns: 1fr; text-align: center; } .info-grid { grid-template-columns: 1fr 1fr; } .idcard .avatar { margin: 0 auto; } .welcome-message { display: none; } }
-    body { display: flex; flex-direction: column; min-height: 100vh; }
-    main { flex: 1; }
+/* ==========================================================================
+   CSS RESPONSIVE - Bắt đầu từ màn hình lớn xuống nhỏ
+   ========================================================================== */
+
+/* 1. Màn hình Tablet (dưới 992px) */
+@media (max-width: 992px) {
+    main {
+        padding: 32px 20px 60px;
+    }
+
+    .idcard {
+        grid-template-columns: 130px 1fr; /* Thu nhỏ cột avatar */
+        gap: 25px;
+    }
+
+    .idcard .avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .idcard .info h2 {
+        font-size: 24px;
+    }
+
+    .info-grid {
+        gap: 8px;
+    }
+    
+    .info-item {
+        padding: 8px 12px;
+    }
+
+    .value {
+        font-size: 15px;
+    }
+
+    .tbl th, .tbl td {
+        padding: 10px 8px; /* Giảm padding của bảng */
+        font-size: 14px;
+    }
+
+    .tbl .small {
+        font-size: 12px;
+    }
+    
+    /* Ẩn các vạch chia điểm trên slider để đỡ rối */
+    .slider-ticks-labels {
+        display: none;
+    }
+}
+
+
+/* 2. Màn hình Điện thoại (dưới 768px) */
+@media (max-width: 768px) {
+    /* --- NAVBAR --- */
+    .navbar {
+        height: 80px;
+    }
+    .title img {
+        height: 150px;
+    }
+    .logo, .welcome-message {
+       display: none; /* Ẩn logo và lời chào cho gọn */
+    }
+
+    /* --- LAYOUT CHÍNH --- */
+    main {
+        padding: 20px 15px 50px;
+    }
+    .main-panel {
+        padding: 15px;
+    }
+
+    /* --- THẺ THÔNG TIN THÍ SINH --- */
+    .idcard {
+        grid-template-columns: 1fr; /* Chuyển thành 1 cột */
+        text-align: center;
+        gap: 15px;
+    }
+
+    .idcard .avatar {
+        margin: 0 auto; /* Căn giữa avatar */
+    }
+
+    .idcard .info h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr 1fr; /* Luôn là 2 cột */
+        text-align: left;
+    }
+
+    /* --- BẢNG CHẤM ĐIỂM --- */
+    /* Đây là phần quan trọng nhất: biến bảng thành dạng "card" trên mobile */
+    .tbl thead {
+        display: none; /* Ẩn tiêu đề gốc của bảng */
+    }
+    .tbl tbody, .tbl tr, .tbl td {
+        display: block; /* Mỗi thành phần sẽ chiếm 1 hàng */
+        width: 100% !important; /* Ghi đè style inline của JS co giãn cột */
+        box-sizing: border-box;
+    }
+    .tbl tr {
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .tbl td {
+        text-align: left !important; /* Căn trái toàn bộ nội dung trong ô */
+        border: none;
+        border-bottom: 1px dashed #eee;
+        position: relative;
+        padding-left: 120px; /* Tạo không gian cho label */
+        padding-top: 12px;
+        padding-bottom: 12px;
+        min-height: 40px; /* Chiều cao tối thiểu cho mỗi dòng "thuộc tính" */
+        display: flex;
+        align-items: center;
+    }
+    .tbl tr td:last-child {
+        border-bottom: none;
+    }
+
+    /* Thêm lại tiêu đề cột bằng pseudo-element ::before */
+    .tbl td::before {
+        content: attr(data-label); /* Sẽ dùng JS để thêm data-label */
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 110px; /* Độ rộng của label */
+        height: 100%;
+        padding: 12px 8px;
+        background-color: #f8f9fa;
+        font-weight: 600;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        border-right: 1px solid #eee;
+    }
+
+    /* Gán nội dung cho các data-label (quan trọng) */
+    .tbl tr td:nth-of-type(1)::before { content: 'Tiêu chí'; }
+    .tbl tr td:nth-of-type(2)::before { content: 'Gợi ý'; }
+    .tbl tr td:nth-of-type(3)::before { content: 'Thang điểm'; }
+    .tbl tr td:nth-of-type(4)::before { content: 'Cho điểm'; }
+    .tbl tr td:nth-of-type(5)::before { content: 'Nhận xét'; }
+
+    /* Điều chỉnh lại các ô đặc biệt */
+    .score-cell {
+        min-width: unset;
+    }
+
+    .slider-container {
+        width: 100%;
+    }
+
+    .comment-box {
+        min-height: 80px;
+    }
+
+    #submit-btn {
+        padding: 15px 35px;
+        font-size: 16px;
+    }
+}
+
+/* 3. Tinh chỉnh cho màn hình điện thoại rất nhỏ (dưới 480px) */
+@media (max-width: 480px) {
+    main {
+        padding: 20px 10px 40px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr; /* Chỉ 1 cột thông tin cho màn hình quá nhỏ */
+    }
+
+    .tbl td {
+        padding-left: 100px;
+    }
+    .tbl td::before {
+        width: 90px;
+        font-size: 12px;
+    }
+}
   </style>
 </head>
 

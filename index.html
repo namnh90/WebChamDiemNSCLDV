@@ -192,20 +192,123 @@
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .login-wrapper {
-                flex-direction: column;
-                max-width: 420px;
-            }
+/* ==========================================================================
+   CSS CƠ BẢN CHO MÀN HÌNH LỚN (DESKTOP - mặc định)
+   ========================================================================== */
+/* ... (Bạn đặt CSS cho màn hình Full HD và lớn hơn ở đây) ... */
 
-            .right {
-                display: none;
-            }
+.navbar {
+    height: 150px; /* Ví dụ chiều cao cho desktop */
+    /* ... các thuộc tính khác ... */
+}
+.title img {
+    height: 180px; /* Ví dụ kích thước cho desktop */
+}
+.logo img {
+    height: 110px; /* Ví dụ kích thước cho desktop */
+}
+/* ... (các style khác cho .login-wrapper, input, button, footer, etc.) ... */
 
-            .left {
-                padding: 40px 30px;
-            }
-        }
+
+/* ==========================================================================
+   BREAKPOINTS - ĐIỀU CHỈNH CHO CÁC MÀN HÌNH NHỎ DẦN
+   ========================================================================== */
+
+/* 1. Màn hình Laptop và Desktop nhỏ (ví dụ: dưới 1200px) */
+@media (max-width: 1200px) {
+    .navbar {
+        height: 130px;
+        padding: 0 24px;
+    }
+    .title img {
+        height: 170px; /* Giảm một chút */
+    }
+    .logo img {
+        height: 100px; /* Giảm một chút */
+    }
+    .login-wrapper {
+        max-width: 420px; /* Có thể giữ nguyên hoặc thu nhỏ một chút */
+    }
+}
+
+/* 2. Màn hình Tablet (ví dụ: dưới 992px) */
+/* Đây là breakpoint phổ biến cho tablet ở chiều ngang */
+@media (max-width: 992px) {
+    .navbar {
+        height: 120px;
+        padding: 0 20px;
+    }
+    .title img {
+        height: 160px; /* Co nhỏ title đáng kể hơn */
+    }
+    .logo img {
+        height: 90px; /* Co nhỏ logo */
+    }
+    .login-wrapper {
+        max-width: 400px;
+    }
+    .left {
+        padding: 40px 30px;
+    }
+    h2 {
+        font-size: 26px;
+    }
+    input, button {
+        font-size: 18px;
+    }
+}
+
+
+/* 3. Màn hình Điện thoại lớn & Tablet (chiều dọc) (dưới 768px) */
+/* Đây là breakpoint bạn đã có, rất hợp lý */
+@media (max-width: 768px) {
+    .login-wrapper {
+        min-height: auto; /* Bỏ chiều cao tối thiểu để form tự co giãn */
+        margin: 0 15px; /* Thêm khoảng cách hai bên để không bị dính sát màn hình */
+    }
+    .center-box {
+        align-items: flex-start; /* Đẩy form lên trên */
+        padding-top: 50px;
+    }
+}
+
+
+/* 4. Màn hình Điện thoại nhỏ (dưới 480px) */
+/* Đây là breakpoint cuối cùng của bạn, dùng để tinh chỉnh cho các thiết bị nhỏ nhất */
+@media (max-width: 480px) {
+    .navbar {
+        height: 80px;
+        justify-content: center; /* Chỉ hiện title cho gọn */
+    }
+    .title img {
+        height: 120px;
+    }
+    .logo {
+        display: none; /* Ẩn logo đi cho đỡ chật, quyết định này rất tốt! */
+    }
+
+    .center-box {
+        padding: 20px 0; /* Bỏ padding hai bên của box, vì đã có margin ở wrapper */
+        padding-top: 40px;
+    }
+    
+    .left {
+        padding: 30px 20px;
+    }
+
+    h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    input, button {
+        font-size: 16px;
+    }
+    
+    footer {
+        font-size: 11px;
+    }
+}
     </style>
 </head>
 
