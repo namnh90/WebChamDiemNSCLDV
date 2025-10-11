@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Bảng điểm chung cuộc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --green-dark: #006837;
+            --green-light: #00a86b;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: url("photo/backgroundbig.png") no-repeat center center/cover fixed;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: -1;
+        }
+
+        .navbar {
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-side {
+            width: 250px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        #homepage-link {
+            background-color: rgba(59, 130, 246, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        #homepage-link:hover {
+            background-color: rgba(37, 99, 235, 1);
+        }
+
+        .navbar-title {
+            font-family: 'Saira Stencil One', sans-serif;
+            font-size: clamp(45px, 6vw, 80px);
+            /* Tôi đã điều chỉnh lại một chút cho cân đối hơn */
+            font-weight: 700;
+
+            text-align: center;
+            line-height: 1.2;
+            flex-grow: 1;
+            /* Cho phép tiêu đề chiếm hết không gian ở giữa */
+
+            background: linear-gradient(360deg, #ffffff 20%, #f50101 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-transform: uppercase;
+            color: transparent;
+            text-shadow:
+                0px 1px 1px rgb(24, 129, 47),
+                /* Viền sáng giả */
+                0px -0px 0px rgba(255, 255, 255),
+                /* Viền tối giả */
+                3px 3px 5px rgb(255, 255, 255);
+            /* Bóng đổ chính */
+        }
+
+        .nav-side.logo {
+            justify-content: flex-end;
+        }
+
+        .nav-side.logo img {
+            height: 80px;
+            object-fit: contain;
+        }
+
+        main {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #e8f9f0;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .admin-panel {
+            width: 95%;
+            max-width: 1700px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .table-responsive-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tbl {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            color: #212529;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tbl th,
+        .tbl td {
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            text-align: left;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .tbl thead th {
+            background-color: #f8f9fa;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .tbl tbody tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
+
+        .tbl td {
+            font-size: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 14px;
+            font-size: 14px;
+            color: #eee;
+            background: rgba(0, 0, 0, 0.65);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .navbar-title {
+                font-size: clamp(24px, 4vw, 36px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                height: 80px;
+                justify-content: center;
+            }
+
+            .nav-side {
+                display: none;
+            }
+        }
+
+        /* === Leaderboard Style === */
+        .leaderboard-wrapper {
+            overflow-x: auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .leaderboard {
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff;
+            font-size: 15px;
+            text-align: center;
+            min-width: 800px;
+        }
+
+        .leaderboard thead th {
+            background: linear-gradient(90deg, #00a86b, #007f52);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px;
+            color: #fff;
+        }
+
+        .leaderboard tbody tr {
+            background: rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        .leaderboard tbody tr:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.01);
+        }
+
+        .leaderboard td {
+            padding: 10px 12px;
+            vertical-align: middle;
+        }
+
+        /* Hạng 1-3 đặc biệt */
+        .leaderboard tr.gold {
+            background: linear-gradient(90deg, #ffd70055, #ffcc0066);
+            font-weight: bold;
+        }
+
+        .leaderboard tr.silver {
+            background: linear-gradient(90deg, #c0c0c055, #d8d8d866);
+        }
+
+        .leaderboard tr.bronze {
+            background: linear-gradient(90deg, #cd7f3255, #d79f4f66);
+        }
+
+        /* Avatar + thông tin */
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .user-cell .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-cell .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-cell .info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-cell .name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #fff;
+        }
+
+        .user-cell .code {
+            font-size: 13px;
+            opacity: 0.8;
+            color: #e0e0e0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .user-cell .name {
+                font-size: 14px;
+            }
+
+            .user-cell .code {
+                font-size: 12px;
+            }
+
+            .leaderboard td,
+            .leaderboard th {
+                padding: 8px;
+            }
+        }
+
+        .leaderboard-wrapper {
+            overflow-x: auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px;
+        }
+
+        .leaderboard {
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff;
+            font-size: 15px;
+            text-align: center;
+            min-width: 900px;
+        }
+
+        .leaderboard thead th {
+            background: linear-gradient(90deg, #009f6b, #007f52);
+            font-weight: 700;
+            padding: 12px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .leaderboard tbody tr {
+            background: rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.25s ease;
+        }
+
+        .leaderboard tbody tr:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.01);
+        }
+
+        /* Rank colors */
+        .leaderboard tr.gold {
+            background: linear-gradient(90deg, #ffd70055, #ffcc0066);
+            font-weight: bold;
+        }
+
+        .leaderboard tr.silver {
+            background: linear-gradient(90deg, #c0c0c055, #e0e0e066);
+        }
+
+        .leaderboard tr.bronze {
+            background: linear-gradient(90deg, #cd7f3255, #d79f4f66);
+        }
+
+        /* Avatar */
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .user-cell .avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #00ff99;
+            box-shadow: 0 0 10px rgba(0, 255, 150, 0.4);
+            flex-shrink: 0;
+        }
+
+        .user-cell .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .user-cell .avatar img:hover {
+            transform: scale(1.1);
+        }
+
+        .user-cell .info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-cell .name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #fff;
+        }
+
+        .user-cell .code {
+            font-size: 13px;
+            opacity: 0.8;
+            color: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .user-cell .name {
+                font-size: 14px;
+            }
+
+            .user-cell .code {
+                font-size: 12px;
+            }
+
+            .leaderboard td,
+            .leaderboard th {
+                padding: 8px;
+            }
+        }
+        .export-btn {
+    background: linear-gradient(90deg, #009157, #00b26b);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.export-btn:hover {
+    background: linear-gradient(90deg, #00b26b, #007a3d);
+    transform: scale(1.05);
+}
+        /* === Export button === */
+.admin-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+.export-btn {
+    background: linear-gradient(90deg, #007a3d, #00b26b);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+.export-btn:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(90deg, #00b26b, #009157);
+}
+
+/* === Bảng Leaderboard rõ nền === */
+.leaderboard-wrapper {
+    overflow-x: auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(3px);
+    background: rgba(32, 64, 50, 0.85); /* rõ hơn, bớt trong suốt */
+    padding: 6px;
+}
+
+/* === Responsive dạng thẻ (card view khi nhỏ) === */
+@media (max-width: 768px) {
+  .leaderboard thead {
+    display: none;
+  }
+
+  .leaderboard tbody tr {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    padding: 12px;
+    text-align: left;
+  }
+
+  .leaderboard tbody tr td {
+    display: flex;
+    justify-content: space-between;
+    border: none;
+    padding: 6px 0;
+  }
+
+  .leaderboard tbody tr td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #a0ffda;
+  }
+
+  .leaderboard td.user-cell {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .leaderboard td b {
+    font-size: 18px;
+    color: #fff;
+  }
+}
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="nav-side">
+            <a id="homepage-link" href="homepage.html" style="display: none;">Về Trang chủ</a>
+        </div>
+        <h1 class="navbar-title">Bảng Điểm Tổng Hợp</h1>
+        <div class="nav-side logo">
+            <img src="photo/logo.png" alt="Logo">
+        </div>
+    </div>
+    <main>
+        <h2 class="page-title">ĐIỂM CHUNG CUỘC</h2>
+        <div class="admin-panel">
+            <div class="admin-actions">
+                <button id="exportBtn" class="export-btn" onclick="exportToExcel()">⬇️ Xuất Excel</button>
+            </div>
+            <div class="table-responsive-wrapper" id="admin-table-container">
+                <p style="text-align:center; padding: 50px;">Đang tải dữ liệu thống kê...</p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        © 2025 - WEB CHẤM ĐIỂM CUỘC THI NGÔI SAO CHẤT LƯỢNG DỊCH VỤ - Phát triển bởi Phòng Quản lý chất lượng
+    </footer>
+
+    <script>
+        const MASTER_FLOW_URL = "https://default460cecfbf0c64dd7a5ec66ef4d75ae.63.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/664bb920ad5f4b6ebf79de6bfd08cd7e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Hpz2vM23kQzxECy0RqGx94qFOJBPDRBIxdgeCqPnAvI";
+
+        const ADMIN_USERS = ['ADMIN', 'BGK1'];
+        const JUDGES = [
+            { id: 'BGK1', name: 'Điểm Giám khảo 1' }, { id: 'BGK2', name: 'Điểm Giám khảo 2' },
+            { id: 'BGK3', name: 'Điểm Giám khảo 3' }, { id: 'BGK4', name: 'Điểm Giám khảo 4' },
+            { id: 'BGK5', name: 'Điểm Giám khảo 5' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log("Trang admin đã tải xong. Bắt đầu kiểm tra quyền.");
+            const loggedInUser = sessionStorage.getItem('loggedInUser');
+            if (!loggedInUser || !ADMIN_USERS.includes(loggedInUser)) {
+                console.warn("Truy cập bị từ chối. Người dùng không phải admin hoặc chưa đăng nhập.");
+                alert("⚠️ Bạn không có quyền truy cập trang này!");
+                window.location.href = 'login.html';
+                return;
+            }
+            console.log(`Người dùng '${loggedInUser}' được xác nhận là admin.`);
+            checkAdminStatus(loggedInUser);
+            fetchAllAdminData();
+        });
+
+        function checkAdminStatus(loggedInUser) {
+            const homepageLink = document.getElementById('homepage-link');
+            if (homepageLink && ADMIN_USERS.includes(loggedInUser)) {
+                homepageLink.style.display = 'inline-block';
+            }
+        }
+
+        async function fetchAllAdminData() {
+            try {
+                console.log("Bắt đầu tải song song DSTS và Điểm...");
+                const [contestants, allScores] = await Promise.all([
+                    fetchContestants(),
+                    fetchAllScores()
+                ]);
+                console.log("Tải xong! Dữ liệu thô nhận được:", { contestants, allScores });
+                const processedData = processData(contestants, allScores);
+                renderTable(processedData);
+            } catch (error) {
+                console.error("LỖI NGHIÊM TRỌNG khi tải dữ liệu:", error);
+                document.getElementById('admin-table-container').innerHTML = `<p style="color: #ffdddd; text-align: center;">Lỗi tải dữ liệu: ${error.message}</p>`;
+            }
+        }
+        // === Xuất Excel từ dữ liệu SharePoint (qua Flow) ===
+// === Xuất Excel từ JSON (Flow trả JSON) ===
+async function exportToExcel() {
+    const btn = document.getElementById("exportBtn");
+    btn.disabled = true;
+    btn.textContent = "⏳ Đang xuất Excel...";
+
+    try {
+        const payload = { action: "get_all_scores" }; // Flow trả JSON
+        const res = await fetch(MASTER_FLOW_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error("Không thể tải dữ liệu JSON từ Flow");
+        const json = await res.json();
+        if (!Array.isArray(json) || json.length === 0) {
+            alert("⚠️ Không có dữ liệu để xuất Excel!");
+            return;
+        }
+
+        // 🧠 1️⃣ Tìm toàn bộ tiêu chí có thể xuất hiện
+        const allCriteria = new Set();
+        json.forEach(item => {
+            try {
+                const data = JSON.parse(item.JSONDATA || "{}");
+                const details = data?.scores?.details || [];
+                details.forEach(d => allCriteria.add(d.criterion));
+            } catch (e) {}
+        });
+
+        // 🧱 2️⃣ Chuẩn hóa dữ liệu thành dạng phẳng
+        const flattened = json.map(item => {
+            let parsed = {};
+            try {
+                parsed = JSON.parse(item.JSONDATA || "{}");
+            } catch {
+                parsed = {};
+            }
+
+            const details = parsed.scores?.details || [];
+            const scoreMap = {};
+            details.forEach(d => {
+                scoreMap[d.criterion] = d.score;
+            });
+
+            const row = {
+                REF: item.REF || "",
+                BGKCHAM: item.BGKCHAM || parsed.judge || "",
+                MACB: item.MACB || "",
+                TENCB: item.TENCB || item.TenCB || "",
+                CHINHANH: item.CHINHANH || "",
+                PART: parsed.part || "",
+                TOTAL: parsed.scores?.total || "",
+                COMMENT: parsed.scores?.comment || "",
+                SUBMISSION_TIME: parsed.submissionTimestamp || ""
+            };
+
+            // Gán tất cả tiêu chí (nếu thiếu thì để trống)
+            allCriteria.forEach(c => {
+                row[c] = scoreMap[c] || "";
+            });
+
+            return row;
+        });
+
+        // 🧾 3️⃣ Sắp xếp lại thứ tự cột (đưa tiêu chí ra sau)
+        const criteriaCols = Array.from(allCriteria);
+        const baseCols = ["REF", "BGKCHAM", "MACB", "TENCB", "CHINHANH", "PART", "TOTAL", "COMMENT", "SUBMISSION_TIME"];
+        const finalCols = [...baseCols, ...criteriaCols];
+
+        const worksheet = XLSX.utils.json_to_sheet(flattened, { header: finalCols });
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "BangDiemChiTiet");
+
+        // Auto-fit chiều rộng cột
+        const colWidths = finalCols.map(k => ({ wch: Math.max(20, k.length + 2) }));
+        worksheet["!cols"] = colWidths;
+
+        // 4️⃣ Xuất file
+        const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+        const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Bang_Diem_Chi_Tiet.xlsx";
+        a.click();
+        URL.revokeObjectURL(url);
+
+        alert("✅ Xuất Excel thành công (đã bóc toàn bộ tiêu chí)!");
+    } catch (err) {
+        console.error("❌ Lỗi export Excel:", err);
+        alert("⚠️ Lỗi khi xuất Excel. Kiểm tra console để biết chi tiết.");
+    } finally {
+        btn.disabled = false;
+        btn.textContent = "⬇️ Xuất Excel";
+    }
+}
+
+        async function fetchContestants() {
+            const payload = { action: "get_contestants" };
+            const response = await fetch(MASTER_FLOW_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            if (!response.ok) throw new Error('Không thể tải danh sách thí sinh');
+            return await response.json();
+        }
+
+        async function fetchAllScores() {
+            const payload = { action: "get_all_scores" };
+            const response = await fetch(MASTER_FLOW_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            if (!response.ok) throw new Error('Không thể tải danh sách điểm');
+            return await response.json();
+        }
+        function processData(contestants, allScores) {
+            console.groupCollapsed("📊 [processData] Bắt đầu xử lý dữ liệu");
+            console.time("⏱ Tổng thời gian xử lý");
+
+            const dataMap = new Map();
+
+            // 1️⃣ Tạo Map từ danh sách thí sinh
+            contestants.forEach((p, i) => {
+                const macb = p["Mã CB"] || p["MACB"];
+                if (!macb) {
+                    console.warn(`⚠️ [${i + 1}] Thiếu Mã CB`, p);
+                    return;
+                }
+
+                const key = macb.toString().trim();
+                dataMap.set(key, {
+                    ...p,
+                    scoresByJudge: {},
+                    finalScore: 0
+                });
+            });
+
+            // 2️⃣ Gộp dữ liệu điểm dựa theo REF (BGKxxxxPART)
+            let matched = 0, unmatched = 0, parseError = 0;
+
+            allScores.forEach((score, i) => {
+                try {
+                    const ref = (score.REF || "").trim();
+                    if (ref.length < 6) { // tối thiểu 6 ký tự (VD: BGK1x1)
+                        console.warn(`⚠️ REF quá ngắn: ${ref}`);
+                        return;
+                    }
+
+                    // Tách 3 phần:
+                    const judge = ref.substring(0, 4);              // 4 ký tự đầu
+                    const part = ref.slice(-1);                     // ký tự cuối
+                    const macb = ref.substring(4, ref.length - 1);  // phần giữa
+
+                    const jsonData = JSON.parse(score.JSONDATA || "{}");
+                    const total = parseInt(jsonData?.scores?.total, 10) || 0;
+
+                    if (!macb || !dataMap.has(macb)) {
+                        unmatched++;
+                        console.warn(`⚠️ Không tìm thấy thí sinh có MACB='${macb}' (REF=${ref})`);
+                        return;
+                    }
+
+                    const contestant = dataMap.get(macb);
+                    if (!contestant.scoresByJudge[judge]) contestant.scoresByJudge[judge] = {};
+                    contestant.scoresByJudge[judge][`part${part}`] = total;
+
+                    matched++;
+                    console.log(`🟢 Match #${i + 1}: REF=${ref}, Judge=${judge}, MACB=${macb}, Part=${part}, Total=${total}`);
+                } catch (e) {
+                    parseError++;
+                    console.error(`❌ Lỗi parse JSONDATA record #${i + 1}:`, e);
+                }
+            });
+
+            console.log(`📈 Gộp điểm: ${matched} match | ${unmatched} không match | ${parseError} lỗi JSON`);
+
+            // 3️⃣ Tính điểm chung cuộc
+            let withScore = 0, withoutScore = 0;
+
+            dataMap.forEach(contestant => {
+                let grandTotal = 0, judgeCount = 0;
+                Object.values(contestant.scoresByJudge).forEach(judgeScores => {
+                    const totalFromJudge = (judgeScores.part1 || 0) + (judgeScores.part2 || 0);
+                    if (totalFromJudge > 0) {
+                        grandTotal += totalFromJudge;
+                        judgeCount++;
+                    }
+                });
+
+                contestant.finalScore = judgeCount ? (grandTotal / judgeCount).toFixed(2) : 0;
+                if (judgeCount) withScore++; else withoutScore++;
+            });
+
+            console.log(`📊 Có điểm: ${withScore} | Chưa có điểm: ${withoutScore}`);
+            console.timeEnd("⏱ Tổng thời gian xử lý");
+            console.groupEnd();
+
+            return Array.from(dataMap.values());
+        }
+
+
+function renderTable(data) {
+    const container = document.getElementById('admin-table-container');
+
+    const contestantImages = [
+        'photo/user1.jpg','photo/user2.jpg','photo/user3.jpg','photo/user4.jpg',
+        'photo/user5.jpg','photo/user6.jpg','photo/user7.jpg','photo/user8.jpg',
+        'photo/user9.jpg','photo/user10.jpg'
+    ];
+
+    data.sort((a, b) => (parseFloat(b.finalScore) || 0) - (parseFloat(a.finalScore) || 0));
+
+    let html = `
+    <div class="leaderboard-wrapper">
+      <table class="leaderboard">
+        <thead>
+          <tr>
+            <th>🏆 Hạng</th><th>Thí sinh</th><th>Đơn vị</th>
+            ${JUDGES.map(j => `<th>${j.name}</th>`).join('')}
+            <th>Điểm TB</th><th>Xếp loại</th>
+          </tr>
+        </thead><tbody>
+    `;
+
+    data.forEach((p, i) => {
+        const rank = i + 1;
+        const rating = getRating(p.finalScore);
+        const img = contestantImages[i % contestantImages.length];
+        const highlightClass =
+            rank === 1 ? "gold" : rank === 2 ? "silver" : rank === 3 ? "bronze" : "";
+
+        html += `
+        <tr class="${highlightClass}">
+          <td data-label="Hạng"><b>#${rank}</b></td>
+          <td data-label="Thí sinh" class="user-cell">
+            <div class="avatar"><img src="${img}" onerror="this.src='photo/default-avatar.png'"></div>
+            <div class="info"><div class="name">${p["Họ tên"]}</div><div class="code">Mã CB: ${p["Mã CB"]}</div></div>
+          </td>
+          <td data-label="Đơn vị">${p["Tên CN"] || ""}</td>
+          ${JUDGES.map(j => {
+              const s = p.scoresByJudge[j.id];
+              const total = s ? (s.part1 || 0) + (s.part2 || 0) : 0;
+              return `<td data-label="${j.name}">${total || "-"}</td>`;
+          }).join('')}
+          <td data-label="Điểm TB"><b>${p.finalScore || 0}</b></td>
+          <td data-label="Xếp loại">${rating}</td>
+        </tr>`;
+    });
+
+    html += `</tbody></table></div>`;
+    container.innerHTML = html;
+}
+
+
+        function getRating(score) {
+            const numericScore = parseFloat(score);
+            if (isNaN(numericScore) || numericScore <= 0) return 'Chưa có';
+            if (numericScore >= 90) return 'Xuất sắc';
+            if (numericScore >= 80) return 'Giỏi';
+            if (numericScore >= 65) return 'Khá';
+            if (numericScore >= 50) return 'Trung bình';
+            return 'Cần cố gắng';
+        }
+    </script>
+</body>
+
+</html>

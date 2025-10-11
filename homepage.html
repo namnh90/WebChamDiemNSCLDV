@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WEB CHẤM ĐIỂM CUỘC THI NGÔI SAO CHẤT LƯỢNG DỊCH VỤ 2025</title>
-    
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -17,35 +17,64 @@
             --radius: 18px;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
         }
+
         body {
-            margin: 0; font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
             background: url("photo/backgroundbig.png") no-repeat center center/cover fixed;
-            min-height: 100vh; display: flex; flex-direction: column;
-            color: #fff; position: relative;
-            overflow-y: auto; overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
+
         body::before {
-            content: ""; position: fixed; inset: 0;
-            background: rgba(0, 0, 0, 0.35); z-index: -1;
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: -1;
         }
+
         .navbar {
-            height: 110px; display: flex; align-items: center;
-            justify-content: space-between; padding: 0 24px;
-            position: relative; z-index: 2;
-            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .nav-side { width: 100px; flex-shrink: 0; }
-        .nav-side.logo img {
-            height: 80px; object-fit: contain; display: block;
-            margin-left: auto; transition: transform 0.3s ease;
+
+        .nav-side {
+            width: 100px;
+            flex-shrink: 0;
         }
-        .nav-side.logo:hover img { transform: scale(1.05); }
+
+        .nav-side.logo img {
+            height: 80px;
+            object-fit: contain;
+            display: block;
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-side.logo:hover img {
+            transform: scale(1.05);
+        }
+
         .navbar-title {
-             font-family: 'Saira Stencil One', sans-serif; font-size: clamp(45px, 6vw, 80px);
+            font-family: 'Saira Stencil One', sans-serif;
+            font-size: clamp(45px, 6vw, 80px);
             /* Tôi đã điều chỉnh lại một chút cho cân đối hơn */
             font-weight: 700;
-        
+
             text-align: center;
             line-height: 1.2;
             flex-grow: 1;
@@ -64,121 +93,313 @@
                 3px 3px 5px rgb(255, 255, 255);
             /* Bóng đổ chính */
         }
+
         main {
-            flex: 1; position: relative; z-index: 1; padding: 40px;
-            display: flex; flex-direction: column; align-items: center;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
         .page-title {
-            width: 100%; max-width: 1700px; text-align: center; font-size: 26px;
-            font-weight: 600; margin: 0 0 20px 0; color: #e8f9f0;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); letter-spacing: 0.5px;
+            width: 100%;
+            max-width: 1700px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            color: #e8f9f0;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.5px;
         }
-        .center-banner { text-align: center; position: relative; margin-bottom: 30px; }
+
+        .center-banner {
+            text-align: center;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
         .center-banner img {
-            max-width: 560px; width: 100%; height: auto;
-            max-height: 100px; border-radius: 18px;
+            max-width: 560px;
+            width: 100%;
+            height: auto;
+            max-height: 100px;
+            border-radius: 18px;
         }
+
         .grid-container {
-            display: grid; grid-template-columns: repeat(5, 1fr); gap: 40px;
-            width: 95%; max-width: 1700px; padding: 40px;
-            background: rgba(0, 0, 0, 0.1); border-radius: 24px;
-            backdrop-filter: blur(10px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 40px;
+            width: 95%;
+            max-width: 1700px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             min-height: 300px;
         }
+
         .grid-message {
-            grid-column: 1 / -1; text-align: center; font-size: 1.5em;
-            padding: 50px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 1.5em;
+            padding: 50px;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
         }
-        .grid-message.error { color: #ffdddd; }
+
+        .grid-message.error {
+            color: #ffdddd;
+        }
+
         .card {
-            background: rgba(30, 41, 59, 0.4); border-radius: var(--radius);
-            padding: 24px; text-align: center; transition: all 0.3s ease;
-            cursor: pointer; position: relative; backdrop-filter: blur(8px);
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex; flex-direction: column;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            /* Thẻ cha cần có position relative */
         }
+
         .card:hover {
-            transform: translateY(-8px); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
             border-color: rgba(0, 168, 107, 0.7);
         }
+
         .card h3 {
-            margin: 15px 0 5px; font-size: 20px; font-weight: 600; color: #fff;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); min-height: 48px;
+            margin: 15px 0 5px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+            min-height: 48px;
         }
+
         .info-section {
-            margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: left; font-size: 14px; flex-grow: 1;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+            font-size: 14px;
+            flex-grow: 1;
         }
-        .info-section p { margin: 8px 0; color: #e0e0e0; }
-        .info-section p strong { color: #fff; display: inline-block; width: 80px; }
-        .vote-btn-wrapper { margin-top: auto; padding-top: 20px; }
+
+        .info-section p {
+            margin: 8px 0;
+            color: #e0e0e0;
+        }
+
+        .info-section p strong {
+            color: #fff;
+            display: inline-block;
+            width: 80px;
+        }
+
+        .vote-btn-wrapper {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
         .vote-btn {
-            display: inline-block; background: var(--green-dark); color: white;
-            padding: 10px 25px; border-radius: 30px; font-size: 15px; font-weight: 600;
-            transition: all 0.25s ease; width: 100%; box-sizing: border-box;
-            border: none; cursor: pointer;
+            display: inline-block;
+            background: var(--green-dark);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            cursor: pointer;
         }
-        .vote-btn:disabled { background: #5a687a; cursor: not-allowed; color: #ccc; }
-        .card:hover .vote-btn:not(:disabled) { background: var(--green-light); }
-        .card .vote-btn.graded { background-color: #ff9800; color: #000; }
-        .card .vote-btn.graded:hover { background-color: #f57c00; }
+
+        .vote-btn:disabled {
+            background: #5a687a;
+            cursor: not-allowed;
+            color: #ccc;
+        }
+
+        .card:hover .vote-btn:not(:disabled) {
+            background: var(--green-light);
+        }
+
+        .card .vote-btn.graded {
+            background-color: #ff9800;
+            color: #000;
+        }
+
+        .card .vote-btn.graded:hover {
+            background-color: #f57c00;
+        }
+
         .avatar-wrapper {
-            width: 150px; height: 150px; margin: 0 auto; border-radius: 50%;
-            overflow: hidden; border: 5px solid rgba(255, 255, 255, 0.6);
-            transition: all 0.3s ease; position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+            position: relative;
         }
+
         .graded-tick-icon {
-            position: absolute; bottom: 5px; right: 5px; width: 32px; height: 32px;
-            background-color: #28a745; color: white; border-radius: 50%;
-            display: none; align-items: center; justify-content: center;
-            font-size: 20px; font-weight: bold; border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
+    position: absolute;
+    top: 135px;
+    right: 35px;
+    
+    /* CÁC THUỘC TÍNH BỊ THIẾU NẰM Ở ĐÂY */
+    width: 32px;
+    height: 32px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 50%; /* << Dòng này biến hình vuông thành hình tròn */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 3;
+}
+
         .avatar-wrapper img {
-            width: 100%; height: 100%; object-fit: cover;
-            border-radius: 50%; transition: transform 0.3s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
         }
-        .card:hover img { transform: scale(1.07); }
+
+        .card:hover img {
+            transform: scale(1.07);
+        }
+
         footer {
-            text-align: center; padding: 14px; font-size: 14px; color: #eee;
-            background: rgba(0, 0, 0, 0.65); position: relative; z-index: 2;
+            text-align: center;
+            padding: 14px;
+            font-size: 14px;
+            color: #eee;
+            background: rgba(0, 0, 0, 0.65);
+            position: relative;
+            z-index: 2;
         }
 
         /* RESPONSIVE */
-        @media (max-width: 1600px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 1600px) {
+            .grid-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
         @media (max-width: 1200px) {
-            .grid-container { grid-template-columns: repeat(3, 1fr); }
-            .navbar { height: 100px; }
-            .nav-side.logo img { height: 70px; }
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .navbar {
+                height: 100px;
+            }
+
+            .nav-side.logo img {
+                height: 70px;
+            }
         }
+
         @media (max-width: 992px) {
-            main { padding: 30px 20px; }
-            .grid-container { grid-template-columns: repeat(2, 1fr); gap: 25px; padding: 30px; }
-            .avatar-wrapper { width: 130px; height: 130px; }
+            main {
+                padding: 30px 20px;
+            }
+
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+                padding: 30px;
+            }
+
+            .avatar-wrapper {
+                width: 130px;
+                height: 130px;
+            }
         }
+
         @media (max-width: 767px) {
-            .navbar { height: 80px; justify-content: center; }
-            .nav-side { display: none; }
-            main { padding: 20px 15px; }
-            .page-title { text-align: center; margin: 0 0 20px 0; }
-            .grid-container { grid-template-columns: 1fr; }
+            .navbar {
+                height: 80px;
+                justify-content: center;
+            }
+
+            .nav-side {
+                display: none;
+            }
+
+            main {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                text-align: center;
+                margin: 0 0 20px 0;
+            }
+
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
         }
+
         @media (max-width: 480px) {
-            .navbar { height: 70px; }
-            .grid-container { padding: 15px; }
+            .navbar {
+                height: 70px;
+            }
+
+            .grid-container {
+                padding: 15px;
+            }
         }
+        /* Thêm vào <style> của homepage.html */
+#admin-button {
+    background-color: rgba(99, 102, 241, 0.8); /* Màu tím indigo */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+#admin-button:hover {
+    background-color: rgba(79, 70, 229, 1);
+}
     </style>
 </head>
 
 <body>
-    <div class="navbar">
-        <div class="nav-side"></div>
-        <h1 class="navbar-title">Ngôi Sao Chất Lượng Dịch Vụ</h1>
-        <a href="ranking.html" class="nav-side logo" title="Xem bảng xếp hạng">
-            <img src="photo/logo.png" alt="Logo">
-        </a>
+<div class="navbar">
+    <div class="nav-side">
+        <a id="admin-button" href="summary.html" style="display: none;">Trang Admin</a>
     </div>
+    <h1 class="navbar-title">Ngôi Sao Chất Lượng Dịch Vụ</h1>
+
+        <img src="photo/logo.png" alt="Logo">
+    </a>
+</div>
 
     <main>
         <div class="center-banner">
@@ -186,7 +407,7 @@
         </div>
         <h2 class="page-title">DANH SÁCH THÍ SINH DỰ THI</h2>
         <div class="grid-container" id="contestant-grid">
-            </div>
+        </div>
     </main>
 
     <footer>
@@ -196,7 +417,7 @@
     <script>
         // --- KHAI BÁO URL TỔNG Ở ĐẦU ---
         const MASTER_FLOW_URL = "https://default460cecfbf0c64dd7a5ec66ef4d75ae.63.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/664bb920ad5f4b6ebf79de6bfd08cd7e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Hpz2vM23kQzxECy0RqGx94qFOJBPDRBIxdgeCqPnAvI";
-        
+const ADMIN_USERS = ['ADMIN']; // << THAY TÊN ADMIN CỦA BẠN VÀO ĐÂY
         const contestantImages = [
             'photo/user1.jpg', 'photo/user2.jpg', 'photo/user3.jpg', 'photo/user4.jpg',
             'photo/user5.jpg', 'photo/user6.jpg', 'photo/user7.jpg', 'photo/user8.jpg',
@@ -205,12 +426,24 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             fetchAllData();
-        });
 
+            checkAdminStatus(); // << GỌI HÀM KIỂM TRA ADMIN
+        });
+ // === HÀM MỚI ĐỂ KIỂM TRA VÀ HIỂN THỊ NÚT ADMIN ===
+    function checkAdminStatus() {
+        const loggedInUser = sessionStorage.getItem('loggedInUser');
+        const adminButton = document.getElementById('admin-button');
+
+        if (loggedInUser && ADMIN_USERS.includes(loggedInUser)) {
+            if (adminButton) {
+                adminButton.style.display = 'inline-block'; // Hiện nút nếu là admin
+            }
+        }
+    }
         async function fetchAllData() {
             const gridContainer = document.getElementById('contestant-grid');
             gridContainer.innerHTML = `<p class="grid-message">Đang tải dữ liệu...</p>`;
-            
+
             try {
                 const [contestants, gradedStatuses] = await Promise.all([
                     fetchContestants(),
@@ -234,11 +467,21 @@
             return await response.json();
         }
 
-// THAY THẾ HÀM CŨ BẰNG HÀM NÀY ĐỂ DEBUG
+        // THAY THẾ HÀM CŨ BẰNG HÀM NÀY ĐỂ DEBUG
 async function fetchGradedStatuses() {
     const judgeName = sessionStorage.getItem('loggedInUser');
-    if (!judgeName) return [];
 
+    // --- LOGIC MỚI ĐƯỢC THÊM VÀO ---
+    // 1. Kiểm tra xem người dùng có phải là Admin không
+    if (!judgeName || ADMIN_USERS.includes(judgeName)) {
+        // 2. Nếu là Admin hoặc chưa đăng nhập, không cần tìm trạng thái đã chấm.
+        // Trả về một mảng rỗng để tất cả các nút đều là "Chấm điểm".
+        // Admin sẽ dùng nút "Trang Admin" để xem tổng quan.
+        return [];
+    }
+    // --- KẾT THÚC LOGIC MỚI ---
+
+    // 3. Nếu không phải Admin (tức là BGK1, BGK2...), thì tiếp tục chạy logic cũ
     const payload = { 
         action: "get_graded_statuses",
         BGKCHAM: judgeName 
@@ -258,14 +501,12 @@ async function fetchGradedStatuses() {
         
         const result = JSON.parse(text);
         
-        if (Array.isArray(result) && result.length > 0) {
-            if (typeof result[0] === 'object' && result[0] !== null) {
-                const key = Object.keys(result[0]).find(k => k.toUpperCase().includes('MACB'));
-                return result.map(item => item[key]?.toString()).filter(Boolean);
-            } 
-            return result.map(id => id?.toString()).filter(Boolean);
+        if (Array.isArray(result) && result.length > 0 && typeof result[0] === 'object' && result[0] !== null) {
+            const key = Object.keys(result[0]).find(k => k.toUpperCase().includes('MACB'));
+            return result.map(item => item[key]?.toString()).filter(Boolean);
         }
-        return [];
+        
+        return Array.isArray(result) ? result.map(id => id?.toString()).filter(Boolean) : [];
 
     } catch (error) {
         console.error("Lỗi khi tải hoặc xử lý trạng thái đã chấm:", error);
@@ -274,30 +515,32 @@ async function fetchGradedStatuses() {
 }
 
 
-function renderContestants(contestantData, gradedIDs) {
-    const gridContainer = document.getElementById('contestant-grid');
-    gridContainer.innerHTML = '';
+        function renderContestants(contestantData, gradedIDs) {
+            const gridContainer = document.getElementById('contestant-grid');
+            gridContainer.innerHTML = '';
 
-    if (!contestantData || contestantData.length === 0) {
-        gridContainer.innerHTML = `<p class="grid-message">Không có thí sinh nào trong danh sách.</p>`;
-        return;
-    }
+            if (!contestantData || contestantData.length === 0) {
+                gridContainer.innerHTML = `<p class="grid-message">Không có thí sinh nào trong danh sách.</p>`;
+                return;
+            }
 
-    contestantData.forEach(person => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.dataset.contestant = JSON.stringify(person);
+            contestantData.forEach(person => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.contestant = JSON.stringify(person);
 
-        const imageIndex = person['STT'] - 1;
-        const imageUrl = (imageIndex >= 0 && imageIndex < contestantImages.length)
-            ? contestantImages[imageIndex]
-            : 'https://placehold.co/150x150/EFEFEF/333?text=No+Image';
+                const imageIndex = person['STT'] - 1;
+                const imageUrl = (imageIndex >= 0 && imageIndex < contestantImages.length)
+                    ? contestantImages[imageIndex]
+                    : 'https://placehold.co/150x150/EFEFEF/333?text=No+Image';
 
-        card.innerHTML = `
+                card.innerHTML = `
             <div class="avatar-wrapper">
                 <img src="${imageUrl}" alt="Ảnh của ${person['Họ tên']}" onerror="this.onerror=null;this.src='https://placehold.co/150x150/EFEFEF/333?text=Error';">
-                <div class="graded-tick-icon">✔️</div>
+                
             </div>
+
+            <div class="graded-tick-icon">✔️</div>
             <h3>${person['Họ tên']}</h3>
             <div class="info-section">
                 <p><strong>Chức danh:</strong> ${person['Chức danh'] || 'N/A'}</p>
@@ -307,22 +550,22 @@ function renderContestants(contestantData, gradedIDs) {
             <div class="vote-btn-wrapper">
                 <button class="vote-btn" onclick="goToVotePage(event, this)">Chấm điểm</button>
             </div>`;
-        
-        gridContainer.appendChild(card);
-        console.log("DANH SÁCH ID ĐÃ CHẤM NHẬN ĐƯỢC:", gradedIDs);
-        // SỬA Ở ĐÂY: Thêm .toString() khi so sánh để đảm bảo an toàn tuyệt đối
-        const isGraded = gradedIDs.includes(person['Mã CB']?.toString());
-        
-        const voteButton = card.querySelector('.vote-btn');
-        const tickIcon = card.querySelector('.graded-tick-icon');
 
-        if (isGraded) {
-            voteButton.classList.add('graded');
-            voteButton.textContent = 'Xem & Sửa điểm';
-            tickIcon.style.display = 'flex';
+                gridContainer.appendChild(card);
+                console.log("DANH SÁCH ID ĐÃ CHẤM NHẬN ĐƯỢC:", gradedIDs);
+                // SỬA Ở ĐÂY: Thêm .toString() khi so sánh để đảm bảo an toàn tuyệt đối
+                const isGraded = gradedIDs.includes(person['Mã CB']?.toString());
+
+                const voteButton = card.querySelector('.vote-btn');
+                const tickIcon = card.querySelector('.graded-tick-icon');
+
+                if (isGraded) {
+                    voteButton.classList.add('graded');
+                    voteButton.textContent = 'Xem & Sửa điểm';
+                    tickIcon.style.display = 'flex';
+                }
+            });
         }
-    });
-}
 
         function goToVotePage(event, button) {
             event.stopPropagation();
@@ -338,4 +581,5 @@ function renderContestants(contestantData, gradedIDs) {
         }
     </script>
 </body>
+
 </html>

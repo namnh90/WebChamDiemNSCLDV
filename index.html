@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WEB CHẤM ĐIỂM CUỘC THI NGÔI SAO CHẤT LƯỢNG DỊCH VỤ 2025</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
     <style>
         :root {
             --green-dark: #006837;
@@ -28,18 +28,18 @@
             position: relative;
             overflow-y: auto;
             overflow-x: auto;
-            /* Nên đổi thành hidden để ẩn dứt điểm */
-
-            /* align-items: center; */
-            /* <<< QUAN TRỌNG: TÌM VÀ XÓA DÒNG NÀY ĐI */
+            padding-top: 50px;
+            /* Tạo khoảng trống ở đầu trang */
+            box-sizing: border-box;
+            /* Đảm bảo padding không làm thay đổi kích thước tổng */
         }
 
         .navbar-title {
-        font-family: 'Saira Stencil One', sans-serif;
+            font-family: 'Saira Stencil One', sans-serif;
             font-size: clamp(45px, 6vw, 80px);
             /* Tôi đã điều chỉnh lại một chút cho cân đối hơn */
             font-weight: 700;
-        
+
             text-align: center;
             line-height: 1.2;
             flex-grow: 1;
@@ -351,6 +351,20 @@
             .navbar-title {
                 /* Chỉnh lại cỡ chữ cho màn hình nhỏ hơn */
                 font-size: clamp(24px, 7vw, 40px);
+            }
+
+            .center-box {
+                align-items: center;
+                /* Sửa từ flex-start về center */
+                padding-top: 0;
+                /* Bỏ padding-top cũ đi */
+            }
+
+            .center-box {
+                align-items: center;
+                /* Sửa từ flex-start về center */
+                padding-top: 0;
+                /* Bỏ padding-top cũ đi */
             }
         }
 
