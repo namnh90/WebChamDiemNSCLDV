@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WEB CHẤM ĐIỂM CUỘC THI NGÔI SAO CHẤT LƯỢNG DỊCH VỤ 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
     <style>
         :root {
             --green-dark: #006837;
@@ -23,7 +26,37 @@
             flex-direction: column;
             color: #222;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: auto;
+            /* Nên đổi thành hidden để ẩn dứt điểm */
+
+            /* align-items: center; */
+            /* <<< QUAN TRỌNG: TÌM VÀ XÓA DÒNG NÀY ĐI */
+        }
+
+        .navbar-title {
+        font-family: 'Saira Stencil One', sans-serif;
+            font-size: clamp(45px, 6vw, 80px);
+            /* Tôi đã điều chỉnh lại một chút cho cân đối hơn */
+            font-weight: 700;
+        
+            text-align: center;
+            line-height: 1.2;
+            flex-grow: 1;
+            /* Cho phép tiêu đề chiếm hết không gian ở giữa */
+
+            background: linear-gradient(360deg, #ffffff 20%, #f50101 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-transform: uppercase;
+            color: transparent;
+            text-shadow:
+                0px 1px 1px rgb(24, 129, 47),
+                /* Viền sáng giả */
+                0px -0px 0px rgba(255, 255, 255),
+                /* Viền tối giả */
+                3px 3px 5px rgb(255, 255, 255);
+            /* Bóng đổ chính */
         }
 
         /* Lớp phủ mờ để ảnh dịu hơn */
@@ -38,24 +71,34 @@
             z-index: 0;
         }
 
-        /* Navbar */
+        /* CSS MỚI CHO NAVBAR */
         .navbar {
             height: 150px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 24px;
-
-            color: white;
-            box-shadow: var(--shadow);
-            z-index: 2;
             position: relative;
-            background: rgba(255, 255, 255, 0.25);
-            /* nền trắng mờ */
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-side {
+            width: 120px;
+            /* Đặt chiều rộng cho cột bên */
+            flex-shrink: 0;
+            /* Không cho cột co lại */
+        }
+
+        .nav-side.logo img {
+            height: 90px;
+            /* Điều chỉnh kích thước logo */
+            object-fit: contain;
+            display: block;
+            /* Giúp căn chỉnh dễ hơn */
+            margin-left: auto;
+            /* Đẩy logo về bên phải */
         }
 
         .logo img {
@@ -63,20 +106,9 @@
             object-fit: contain;
         }
 
-        .title img {
-            height: 220px;
-            object-fit: contain;
 
-        }
 
-        .navbar h1 {
-            margin: 0;
-            flex: 1;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
+
 
         /* Trung tâm khung đăng nhập */
         .center-box {
@@ -90,15 +122,24 @@
         }
 
         .login-wrapper {
-            display: flex;
+            /* Các thuộc tính gốc của login-wrapper */
             background: rgba(255, 255, 255, 0.15);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(8px);
-            overflow: hidden;
-            max-width: 820px;
+            backdrop-filter: blur(12px);
+            /* Lấy giá trị blur lớn hơn cho đẹp */
+            max-width: 888px;
+            /* Giới hạn độ rộng hợp lý hơn cho form đơn */
             width: 100%;
-            min-height: 440px;
+
+            /* Các style từ .left được chuyển vào đây */
+            padding: 48px 36px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+            /* Các thuộc tính để căn chỉnh nội dung bên trong */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         /* Khối trái - form đăng nhập */
@@ -192,147 +233,196 @@
         }
 
         /* Responsive */
-/* ==========================================================================
+        /* ==========================================================================
    CSS CƠ BẢN CHO MÀN HÌNH LỚN (DESKTOP - mặc định)
    ========================================================================== */
-/* ... (Bạn đặt CSS cho màn hình Full HD và lớn hơn ở đây) ... */
+        /* ... (Bạn đặt CSS cho màn hình Full HD và lớn hơn ở đây) ... */
 
-.navbar {
-    height: 150px; /* Ví dụ chiều cao cho desktop */
-    /* ... các thuộc tính khác ... */
-}
-.title img {
-    height: 180px; /* Ví dụ kích thước cho desktop */
-}
-.logo img {
-    height: 110px; /* Ví dụ kích thước cho desktop */
-}
-/* ... (các style khác cho .login-wrapper, input, button, footer, etc.) ... */
+        .navbar {
+            height: 150px;
+            /* Ví dụ chiều cao cho desktop */
+            /* ... các thuộc tính khác ... */
+        }
+
+        .title img {
+            height: 180px;
+            /* Ví dụ kích thước cho desktop */
+        }
+
+        .logo img {
+            height: 110px;
+            /* Ví dụ kích thước cho desktop */
+        }
+
+        /* ... (các style khác cho .login-wrapper, input, button, footer, etc.) ... */
 
 
-/* ==========================================================================
+        /* ==========================================================================
    BREAKPOINTS - ĐIỀU CHỈNH CHO CÁC MÀN HÌNH NHỎ DẦN
    ========================================================================== */
 
-/* 1. Màn hình Laptop và Desktop nhỏ (ví dụ: dưới 1200px) */
-@media (max-width: 1200px) {
-    .navbar {
-        height: 130px;
-        padding: 0 24px;
-    }
-    .title img {
-        height: 170px; /* Giảm một chút */
-    }
-    .logo img {
-        height: 100px; /* Giảm một chút */
-    }
-    .login-wrapper {
-        max-width: 420px; /* Có thể giữ nguyên hoặc thu nhỏ một chút */
-    }
-}
+        /* 1. Màn hình Laptop và Desktop nhỏ (ví dụ: dưới 1200px) */
+        @media (max-width: 1200px) {
+            .navbar {
+                height: 130px;
+                padding: 0 24px;
+            }
 
-/* 2. Màn hình Tablet (ví dụ: dưới 992px) */
-/* Đây là breakpoint phổ biến cho tablet ở chiều ngang */
-@media (max-width: 992px) {
-    .navbar {
-        height: 120px;
-        padding: 0 20px;
-    }
-    .title img {
-        height: 160px; /* Co nhỏ title đáng kể hơn */
-    }
-    .logo img {
-        height: 90px; /* Co nhỏ logo */
-    }
-    .login-wrapper {
-        max-width: 400px;
-    }
-    .left {
-        padding: 40px 30px;
-    }
-    h2 {
-        font-size: 26px;
-    }
-    input, button {
-        font-size: 18px;
-    }
-}
+            .logo img {
+                height: 100px;
+                /* Giảm một chút */
+            }
+
+            .login-wrapper {
+                max-width: 420px;
+                /* Có thể giữ nguyên hoặc thu nhỏ một chút */
+            }
+        }
+
+        /* 2. Màn hình Tablet (ví dụ: dưới 992px) */
+        /* Đây là breakpoint phổ biến cho tablet ở chiều ngang */
+        @media (max-width: 992px) {
+            .navbar {
+                height: 120px;
+                padding: 0 20px;
+            }
 
 
-/* 3. Màn hình Điện thoại lớn & Tablet (chiều dọc) (dưới 768px) */
-/* Đây là breakpoint bạn đã có, rất hợp lý */
-@media (max-width: 768px) {
-    .login-wrapper {
-        min-height: auto; /* Bỏ chiều cao tối thiểu để form tự co giãn */
-        margin: 0 15px; /* Thêm khoảng cách hai bên để không bị dính sát màn hình */
-    }
-    .center-box {
-        align-items: flex-start; /* Đẩy form lên trên */
-        padding-top: 50px;
-    }
-}
+
+            .logo img {
+                height: 90px;
+                /* Co nhỏ logo */
+            }
+
+            .login-wrapper {
+                max-width: 400px;
+            }
+
+            .left {
+                padding: 40px 30px;
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+
+            input,
+            button {
+                font-size: 18px;
+            }
+        }
 
 
-/* 4. Màn hình Điện thoại nhỏ (dưới 480px) */
-/* Đây là breakpoint cuối cùng của bạn, dùng để tinh chỉnh cho các thiết bị nhỏ nhất */
-@media (max-width: 480px) {
-    .navbar {
-        height: 80px;
-        justify-content: center; /* Chỉ hiện title cho gọn */
-    }
-    .title img {
-        height: 120px;
-    }
-    .logo {
-        display: none; /* Ẩn logo đi cho đỡ chật, quyết định này rất tốt! */
-    }
+        /* Responsive cho Tablet và Điện thoại */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                /* PHÉP THUẬT NẰM Ở ĐÂY: Chuyển sang bố cục dọc */
+                justify-content: center;
+                /* Căn giữa các mục theo chiều dọc mới */
+                height: auto;
+                /* Cho phép navbar tự giãn chiều cao để chứa cả logo và title */
+                padding: 20px 15px;
+                /* Tăng khoảng đệm cho đẹp hơn */
+            }
 
-    .center-box {
-        padding: 20px 0; /* Bỏ padding hai bên của box, vì đã có margin ở wrapper */
-        padding-top: 40px;
-    }
-    
-    .left {
-        padding: 30px 20px;
-    }
+            /* Ẩn cột trống bên trái đi vì không cần nữa */
+            .nav-side {
+                display: none;
+            }
 
-    h2 {
-        font-size: 22px;
-        margin-bottom: 15px;
-    }
+            /* Hiện lại logo và căn chỉnh */
+            .nav-side.logo {
+                display: block;
+                /* Hiện lại logo */
+                width: auto;
+                /* Bỏ chiều rộng cố định */
+                margin-bottom: 15px;
+                /* Tạo khoảng cách giữa logo và title */
+            }
 
-    input, button {
-        font-size: 16px;
-    }
-    
-    footer {
-        font-size: 11px;
-    }
-}
+            .nav-side.logo img {
+                height: 70px;
+                /* Chỉnh lại kích thước logo cho phù hợp */
+                margin: 0 auto;
+                /* Tự động căn giữa logo */
+            }
+
+            .navbar-title {
+                /* Chỉnh lại cỡ chữ cho màn hình nhỏ hơn */
+                font-size: clamp(24px, 7vw, 40px);
+            }
+        }
+
+
+        /* 4. Màn hình Điện thoại nhỏ (dưới 480px) */
+        /* Đây là breakpoint cuối cùng của bạn, dùng để tinh chỉnh cho các thiết bị nhỏ nhất */
+        @media (max-width: 480px) {
+            .navbar {
+                height: 90px;
+                /* THAY ĐỔI: Giảm chiều cao một chút */
+                padding-top: 10px;
+                /* THÊM MỚI: Thêm chút đệm trên để ảnh không dính sát top */
+                justify-content: center;
+            }
+
+
+
+            .logo {
+                display: none;
+            }
+
+            .center-box {
+                padding: 20px 0;
+                padding-top: 30px;
+                /* THAY ĐỔI: Giảm khoảng cách từ header xuống form một chút */
+            }
+
+            .left {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 22px;
+                margin-bottom: 15px;
+            }
+
+            input,
+            button {
+                font-size: 16px;
+            }
+
+            footer {
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="navbar">
-        <div style="width:60px"></div>
-        <div class="title"><img src="photo\title.png" alt="Title"></div>
-        <div class="logo"><img src="photo\logo.png" alt="Logo"></div>
+        <div class="nav-side"></div>
 
+        <h1 class="navbar-title">Chung kết Ngôi sao Chất lượng Dịch vụ</h1>
+
+        <div class="nav-side logo">
+            <img src="photo\logo.png" alt="Logo">
+        </div>
     </div>
 
     <div class="center-box">
         <div class="login-wrapper">
-            <div class="left">
-                <h2>Xin chào quý Ban Giám Khảo !!!</h2>
-                <input type="text" id="loginUser" placeholder="Tên đăng nhập" autocomplete="off"
+
+            <h2>Xin chào quý Ban Giám Khảo !!!</h2>
+            <input type="text" id="loginUser" placeholder="Tên đăng nhập" autocomplete="off"
+                onkeypress="if(event.key==='Enter') login();">
+            <div class="password-wrapper">
+                <input type="password" id="loginPass" placeholder="Mật khẩu"
                     onkeypress="if(event.key==='Enter') login();">
-                <div class="password-wrapper">
-                    <input type="password" id="loginPass" placeholder="Mật khẩu"
-                        onkeypress="if(event.key==='Enter') login();">
-                    <span class="toggle-eye" onclick="togglePass('loginPass', this)">👁</span>
-                </div>
-                <button onclick="login()">Đăng nhập</button>
+                <span class="toggle-eye" onclick="togglePass('loginPass', this)">👁</span>
             </div>
+            <button onclick="login()">Đăng nhập</button>
+
 
         </div>
     </div>
@@ -375,7 +465,7 @@
                 if (data.success) {
                     // LƯU USERNAME VÀO SESSION STORAGE
                     sessionStorage.setItem('loggedInUser', username);
-                    
+
                     window.location.href = "homepage.html";
                 } else {
                     alert("❌ Sai tài khoản hoặc mật khẩu!");

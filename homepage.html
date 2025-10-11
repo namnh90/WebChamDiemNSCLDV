@@ -5,465 +5,177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WEB CHẤM ĐIỂM CUỘC THI NGÔI SAO CHẤT LƯỢNG DỊCH VỤ 2025</title>
-<style>
-    :root {
-        --green-dark: #006837;
-        --green-light: #00a86b;
-        --radius: 18px;
-        --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    }
-
-    body {
-        margin: 0;
-        font-family: "Segoe UI", sans-serif;
-        background: url("photo/backgroundbig.png") no-repeat center center/cover;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        color: #fff;
-        position: relative;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-
-    body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.35);
-        z-index: 0;
-    }
-
-    .navbar {
-        height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        z-index: 2;
-        background: rgba(255, 255, 255, .25);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, .25);
-        transition: height .8s cubic-bezier(.45, 0, .25, 1);
-    }
-
-    .logo {
-        position: absolute;
-        right: 24px;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    .logo img {
-        height:100px;
-        object-fit: contain;
-        transition: all .8s cubic-bezier(.45, 0, .25, 1);
-    }
-
-    .title {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        height: 100%;
-        display: flex;
-        align-items: center;
-    }
-
-    .title img {
-        height: 200px;
-        object-fit: contain;
-        transition: all .8s cubic-bezier(.45, 0, .25, 1);
-    }
-
-    main {
-        flex: 1;
-        position: relative;
-        z-index: 2;
-        padding: 50px 80px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .page-title {
-        width: 100%;
-        max-width: 1700px;
-        text-align: left;
-        font-size: 26px;
-        font-weight: 600;
-        margin: 0 0 10px 20px;
-        color: #e8f9f0;
-        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-        letter-spacing: 0.5px;
-    }
-
-    .center-banner {
-        text-align: center;
-        position: relative;
-        margin-bottom: 20px;
-    }
-
-    .center-banner img {
-        max-width: 560px;
-        width: 100%;
-        height: auto;
-        max-height: 100px;
-        border-radius: 18px;
-    }
-
-    .grid-container {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 40px;
-        width: 95%;
-        max-width: 1700px;
-        padding: 50px 60px;
-        background: rgba(255, 255, 255, 0.15);
-        border-radius: 24px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        transition: all 0.3s ease;
-        min-height: 300px;
-    }
-
-    .grid-message {
-        grid-column: 1 / -1;
-        text-align: center;
-        font-size: 1.5em;
-        padding: 50px;
-        color: #fff;
-        text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    }
-    .grid-message.error {
-        color: #ffdddd;
-    }
-
-    .card {
-        background: rgba(30, 41, 59, 0.5);
-        border-radius: var(--radius);
-        padding: 24px;
-        text-align: center;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        position: relative;
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        display: flex;
-        flex-direction: column;
-    }
-
-    .card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
-        border-color: rgba(0, 168, 107, 0.7);
-    }
-
-    .card.selected {
-        outline: 3px solid var(--green-light);
-        box-shadow: 0 10px 30px rgba(0, 168, 107, 0.5);
-    }
     
-    .card h3 {
-        margin: 15px 0 5px;
-        font-size: 20px;
-        font-weight: 600;
-        color: #fff;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-    }
-    
-    .info-section {
-        margin-top: 15px;
-        padding-top: 15px;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-        text-align: left;
-        font-size: 14px;
-        flex-grow: 1;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
 
-    .info-section p {
-        margin: 8px 0;
-        color: #e0e0e0;
-    }
-    .info-section p strong {
-        color: #fff;
-        display: inline-block;
-        width: 80px;
-    }
-    
-/* Làm cho wrapper của nút thành một flex container */
-.vote-btn-wrapper {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Căn giữa nút và chấm tròn */
-    gap: 10px; /* Khoảng cách giữa chấm tròn và nút */
-}
-/* Sửa lại style cho chấm tròn, bỏ position: absolute */
-.status-indicator {
-    width: 15px;
-    height: 15px;
-    background-color: #28a745;
-    border-radius: 50%;
-    border: 2px solid white;
-    display: none; /* Vẫn ẩn mặc định */
-    flex-shrink: 0; /* Đảm bảo nó không bị co lại */
-}
+    <style>
+        :root {
+            --green-dark: #006837;
+            --green-light: #00a86b;
+            --radius: 18px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+        body {
+            margin: 0; font-family: "Segoe UI", sans-serif;
+            background: url("photo/backgroundbig.png") no-repeat center center/cover fixed;
+            min-height: 100vh; display: flex; flex-direction: column;
+            color: #fff; position: relative;
+            overflow-y: auto; overflow-x: hidden;
+        }
+        body::before {
+            content: ""; position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.35); z-index: -1;
+        }
+        .navbar {
+            height: 110px; display: flex; align-items: center;
+            justify-content: space-between; padding: 0 24px;
+            position: relative; z-index: 2;
+            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .nav-side { width: 100px; flex-shrink: 0; }
+        .nav-side.logo img {
+            height: 80px; object-fit: contain; display: block;
+            margin-left: auto; transition: transform 0.3s ease;
+        }
+        .nav-side.logo:hover img { transform: scale(1.05); }
+        .navbar-title {
+             font-family: 'Saira Stencil One', sans-serif; font-size: clamp(45px, 6vw, 80px);
+            /* Tôi đã điều chỉnh lại một chút cho cân đối hơn */
+            font-weight: 700;
+        
+            text-align: center;
+            line-height: 1.2;
+            flex-grow: 1;
+            /* Cho phép tiêu đề chiếm hết không gian ở giữa */
 
-/* Sửa lại style cho nút màu cam */
-.vote-btn.graded {
-    background-color: #ff9800; /* Màu cam */
-    color: #000; /* Chữ đen */
-}
+            background: linear-gradient(360deg, #ffffff 20%, #f50101 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-transform: uppercase;
+            color: transparent;
+            text-shadow:
+                0px 1px 1px rgb(24, 129, 47),
+                /* Viền sáng giả */
+                0px -0px 0px rgba(255, 255, 255),
+                /* Viền tối giả */
+                3px 3px 5px rgb(255, 255, 255);
+            /* Bóng đổ chính */
+        }
+        main {
+            flex: 1; position: relative; z-index: 1; padding: 40px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .page-title {
+            width: 100%; max-width: 1700px; text-align: center; font-size: 26px;
+            font-weight: 600; margin: 0 0 20px 0; color: #e8f9f0;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); letter-spacing: 0.5px;
+        }
+        .center-banner { text-align: center; position: relative; margin-bottom: 30px; }
+        .center-banner img {
+            max-width: 560px; width: 100%; height: auto;
+            max-height: 100px; border-radius: 18px;
+        }
+        .grid-container {
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 40px;
+            width: 95%; max-width: 1700px; padding: 40px;
+            background: rgba(0, 0, 0, 0.1); border-radius: 24px;
+            backdrop-filter: blur(10px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 300px;
+        }
+        .grid-message {
+            grid-column: 1 / -1; text-align: center; font-size: 1.5em;
+            padding: 50px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        .grid-message.error { color: #ffdddd; }
+        .card {
+            background: rgba(30, 41, 59, 0.4); border-radius: var(--radius);
+            padding: 24px; text-align: center; transition: all 0.3s ease;
+            cursor: pointer; position: relative; backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-8px); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 168, 107, 0.7);
+        }
+        .card h3 {
+            margin: 15px 0 5px; font-size: 20px; font-weight: 600; color: #fff;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); min-height: 48px;
+        }
+        .info-section {
+            margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left; font-size: 14px; flex-grow: 1;
+        }
+        .info-section p { margin: 8px 0; color: #e0e0e0; }
+        .info-section p strong { color: #fff; display: inline-block; width: 80px; }
+        .vote-btn-wrapper { margin-top: auto; padding-top: 20px; }
+        .vote-btn {
+            display: inline-block; background: var(--green-dark); color: white;
+            padding: 10px 25px; border-radius: 30px; font-size: 15px; font-weight: 600;
+            transition: all 0.25s ease; width: 100%; box-sizing: border-box;
+            border: none; cursor: pointer;
+        }
+        .vote-btn:disabled { background: #5a687a; cursor: not-allowed; color: #ccc; }
+        .card:hover .vote-btn:not(:disabled) { background: var(--green-light); }
+        .card .vote-btn.graded { background-color: #ff9800; color: #000; }
+        .card .vote-btn.graded:hover { background-color: #f57c00; }
+        .avatar-wrapper {
+            width: 150px; height: 150px; margin: 0 auto; border-radius: 50%;
+            overflow: hidden; border: 5px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease; position: relative;
+        }
+        .graded-tick-icon {
+            position: absolute; bottom: 5px; right: 5px; width: 32px; height: 32px;
+            background-color: #28a745; color: white; border-radius: 50%;
+            display: none; align-items: center; justify-content: center;
+            font-size: 20px; font-weight: bold; border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .avatar-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 50%; transition: transform 0.3s ease;
+        }
+        .card:hover img { transform: scale(1.07); }
+        footer {
+            text-align: center; padding: 14px; font-size: 14px; color: #eee;
+            background: rgba(0, 0, 0, 0.65); position: relative; z-index: 2;
+        }
 
-.vote-btn.graded:hover {
-    background-color: #f57c00; /* Cam đậm hơn */
-}
-    .vote-btn {
-        display: inline-block;
-        background: var(--green-dark);
-        color: white;
-        padding: 10px 25px;
-        border-radius: 30px;
-        font-size: 15px;
-        font-weight: 600;
-        transition: all 0.25s ease;
-        width: 100%;
-        box-sizing: border-box;
-        border: none;
-        cursor: pointer;
-    }
-
-    .vote-btn:disabled {
-        background: #5a687a;
-        cursor: not-allowed;
-        color: #ccc;
-    }
-
-    .card:hover .vote-btn:not(:disabled) {
-        background: var(--green-light);
-    }
-
-    .avatar-wrapper {
-        width: 150px;
-        height: 150px;
-        margin: 0 auto;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 5px solid rgba(255, 255, 255, 0.6);
-        transition: all 0.3s ease;
-        position: relative;
-    }
-    
-    /* CSS ĐƯỢC THÊM VÀO */
-    .avatar-wrapper .graded-tick-icon {
-        position: absolute;
-        bottom: 5px;
-        right: 5px;
-        width: 32px;
-        height: 32px;
-        background-color: #28a745;
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        font-weight: bold;
-        border: 2px solid white;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        display: none;
-    }
-
-    .avatar-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-        transition: all 0.3s ease;
-    }
-    
-    .card:hover img {
-        transform: scale(1.07);
-    }
-    
-    .avatar-wrapper::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 10px;
-        height: 10px;
-        background: transparent;
-        transform: translate(-50%, -50%);
-        box-shadow: 0 -75px 0 #FFD700, 0 75px 0 #FFD700, -75px 0 0 #FFD700, 75px 0 0 #FFD700, -53px -53px 0 #FFD700, 53px -53px 0 #FFD700, -53px 53px 0 #FFD700, 53px 53px 0 #FFD700;
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .card:hover .avatar-wrapper::before {
-        animation: sparkle-effect 0.6s ease-out forwards;
-    }
-
-    @keyframes sparkle-effect {
-        0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-        50% { opacity: 1; }
-        100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
-    }
-    
-    footer {
-        text-align: center;
-        padding: 14px;
-        font-size: 14px;
-        color: #eee;
-        background: rgba(0, 0, 0, 0.65);
-        position: relative;
-        z-index: 2;
-    }
-/* ==========================================================================
-   CSS RESPONSIVE - Bắt đầu từ màn hình lớn xuống nhỏ
-   ========================================================================== */
-
-/* 1. Màn hình Laptop lớn (dưới 1600px) */
-@media (max-width: 1600px) {
-    .grid-container {
-        grid-template-columns: repeat(4, 1fr); /* Chuyển thành 4 cột */
-        gap: 30px;
-        padding: 40px;
-        width: 100%; /* Sử dụng toàn bộ chiều rộng */
-    }
-    main {
-        padding: 40px;
-    }
-    .page-title {
-        max-width: none; /* Bỏ giới hạn chiều rộng */
-        padding: 0 20px;
-    }
-}
-
-/* 2. Màn hình Laptop nhỏ & Tablet lớn (dưới 1200px) */
-@media (max-width: 1200px) {
-    .grid-container {
-        grid-template-columns: repeat(3, 1fr); /* Chuyển thành 3 cột */
-    }
-    .navbar {
-        height: 90px;
-    }
-    .title img {
-        height: 180px;
-    }
-    .logo img {
-        height: 80px;
-    }
-}
-
-/* 3. Màn hình Tablet (dưới 992px) */
-@media (max-width: 992px) {
-    .grid-container {
-        grid-template-columns: repeat(2, 1fr); /* Chuyển thành 2 cột */
-        gap: 25px;
-        padding: 30px;
-    }
-    main {
-        padding: 30px 20px;
-    }
-    .avatar-wrapper {
-        width: 130px;
-        height: 130px;
-    }
-    .card h3 {
-        font-size: 18px;
-    }
-    .info-section {
-        font-size: 13px;
-    }
-     .info-section p strong {
-        width: 70px; /* Thu nhỏ label */
-    }
-}
-
-/* 4. Màn hình Điện thoại (dưới 767px) */
-@media (max-width: 767px) {
-    body {
-        /* Cho phép cuộn dễ dàng hơn trên mobile */
-        -webkit-overflow-scrolling: touch; 
-    }
-    .navbar {
-        height: 80px;
-        padding: 0 16px;
-    }
-    .title img {
-        height: 150px;
-    }
-    .logo {
-       display: none; /* Ẩn logo VCB cho gọn */
-    }
-    main {
-        padding: 20px 15px;
-    }
-    .page-title {
-        font-size: 22px;
-        text-align: center;
-        margin: 0 0 20px 0;
-    }
-    .center-banner img {
-        max-width: 90%;
-        max-height: 80px;
-    }
-    .grid-container {
-        grid-template-columns: 1fr; /* Chuyển về 1 cột duy nhất */
-        gap: 20px;
-        padding: 20px;
-    }
-    .avatar-wrapper {
-        width: 120px;
-        height: 120px;
-    }
-    .card h3 {
-        font-size: 20px; /* Cho chữ to lại chút vì chỉ có 1 cột */
-    }
-    .info-section {
-        font-size: 14px;
-    }
-    footer {
-        font-size: 12px;
-        padding: 12px;
-        line-height: 1.5;
-    }
-}
-
-/* 5. Tinh chỉnh cho màn hình điện thoại rất nhỏ (dưới 480px) */
-@media (max-width: 480px) {
-     .navbar {
-        height: 70px;
-    }
-    .title img {
-        height: 130px;
-    }
-    main {
-        padding: 20px 10px;
-    }
-    .grid-container {
-        padding: 15px;
-        gap: 15px;
-    }
-    .card {
-        padding: 18px;
-    }
-    .page-title {
-        font-size: 19px;
-    }
-}
-</style>
+        /* RESPONSIVE */
+        @media (max-width: 1600px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 1200px) {
+            .grid-container { grid-template-columns: repeat(3, 1fr); }
+            .navbar { height: 100px; }
+            .nav-side.logo img { height: 70px; }
+        }
+        @media (max-width: 992px) {
+            main { padding: 30px 20px; }
+            .grid-container { grid-template-columns: repeat(2, 1fr); gap: 25px; padding: 30px; }
+            .avatar-wrapper { width: 130px; height: 130px; }
+        }
+        @media (max-width: 767px) {
+            .navbar { height: 80px; justify-content: center; }
+            .nav-side { display: none; }
+            main { padding: 20px 15px; }
+            .page-title { text-align: center; margin: 0 0 20px 0; }
+            .grid-container { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .navbar { height: 70px; }
+            .grid-container { padding: 15px; }
+        }
+    </style>
 </head>
 
 <body>
     <div class="navbar">
-        <div class="nav-left" style="width:60px"></div>
-        <div class="title"><img src="photo/title.png" alt="Title"></div>
-        <a href="ranking.html" class="logo" title="Xem bảng xếp hạng">
+        <div class="nav-side"></div>
+        <h1 class="navbar-title">Ngôi Sao Chất Lượng Dịch Vụ</h1>
+        <a href="ranking.html" class="nav-side logo" title="Xem bảng xếp hạng">
             <img src="photo/logo.png" alt="Logo">
         </a>
     </div>
@@ -477,189 +189,153 @@
             </div>
     </main>
 
-    <div id="callButton" title="Liên hệ hỗ trợ">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="28" height="28">
-            <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1v3.61a1 1 0 01-1 1A17 17 0 013 5a1 1 0 011-1h3.61a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.34 2.09z" />
-        </svg>
-    </div>
-    <div id="contactPopup">
-        <p><strong>📞 Hotline:</strong> 0123 456 789</p>
-        <p><strong>Zalo:</strong> zalo.me/0123456789</p>
-        <p><strong>Email:</strong> contact@vcb.vn</p>
-    </div>
     <footer>
         © 2025 - WEB CHẤM ĐIỂM CUỘC THI NGÔI SAO CHẤT LƯỢNG DỊCH VỤ - Phát triển bởi Phòng Quản lý chất lượng
     </footer>
 
     <script>
+        // --- KHAI BÁO URL TỔNG Ở ĐẦU ---
+        const MASTER_FLOW_URL = "https://default460cecfbf0c64dd7a5ec66ef4d75ae.63.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/664bb920ad5f4b6ebf79de6bfd08cd7e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Hpz2vM23kQzxECy0RqGx94qFOJBPDRBIxdgeCqPnAvI";
+        
         const contestantImages = [
             'photo/user1.jpg', 'photo/user2.jpg', 'photo/user3.jpg', 'photo/user4.jpg',
             'photo/user5.jpg', 'photo/user6.jpg', 'photo/user7.jpg', 'photo/user8.jpg',
             'photo/user9.jpg', 'photo/user10.jpg'
         ];
 
-        document.addEventListener('DOMContentLoaded', function() {
-            fetchContestants();
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchAllData();
         });
 
-        // LUỒNG 1: Tải danh sách thí sinh khi mở trang
-        async function fetchContestants() {
+        async function fetchAllData() {
             const gridContainer = document.getElementById('contestant-grid');
-            gridContainer.innerHTML = `<p class="grid-message">Đang tải danh sách thí sinh...</p>`;
-
-            const FLOW_URL = "https://default460cecfbf0c64dd7a5ec66ef4d75ae.63.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/639aa156dd91458aaa9716adab243a97/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Z5VQ18MG-cgYrQOtwJsRspqzQEbekZ_bmrlVCNK2WKw";
-
+            gridContainer.innerHTML = `<p class="grid-message">Đang tải dữ liệu...</p>`;
+            
             try {
-                const response = await fetch(FLOW_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-
-                if (!response.ok) throw new Error(`Lỗi mạng: ${response.status}`);
-                const contestants = await response.json();
-                if (!Array.isArray(contestants)) throw new Error("Dữ liệu không đúng định dạng.");
-
-                renderContestants(contestants);
-
+                const [contestants, gradedStatuses] = await Promise.all([
+                    fetchContestants(),
+                    fetchGradedStatuses()
+                ]);
+                renderContestants(contestants, gradedStatuses);
             } catch (error) {
-                console.error("Không thể tải danh sách thí sinh:", error);
-                gridContainer.innerHTML = `<p class="grid-message error">⚠️ Đã xảy ra lỗi khi tải dữ liệu.<br>Vui lòng thử lại sau.</p>`;
+                console.error("Lỗi khi tải dữ liệu tổng hợp:", error);
+                gridContainer.innerHTML = `<p class="grid-message error">⚠️ Đã xảy ra lỗi khi tải dữ liệu. Vui lòng kiểm tra lại đường truyền hoặc liên hệ hỗ trợ.</p>`;
             }
         }
 
-        function renderContestants(contestantData) {
-            const gridContainer = document.getElementById('contestant-grid');
-            gridContainer.innerHTML = ''; 
-
-            if (contestantData.length === 0) {
-                gridContainer.innerHTML = `<p class="grid-message">Không có thí sinh nào trong danh sách.</p>`;
-                return;
-            }
-
-            contestantData.forEach(person => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.dataset.contestant = JSON.stringify(person);
-
-                const imageIndex = person['STT'] - 1;
-                const imageUrl = (imageIndex >= 0 && imageIndex < contestantImages.length)
-                    ? contestantImages[imageIndex]
-                    : 'https://placehold.co/150x150/EFEFEF/333?text=No+Image';
-
-                // HTML ĐƯỢC CẬP NHẬT
-                card.innerHTML = `
-                    <div class="avatar-wrapper">
-                        <img src="${imageUrl}" alt="Ảnh của ${person['Họ tên']}" onerror="this.onerror=null;this.src='https://placehold.co/150x150/EFEFEF/333?text=Error';">
-                        <div class="graded-tick-icon">✔️</div>
-                    </div>
-                    <h3>${person['Họ tên']}</h3>
-                    
-                    <div class="info-section">
-                        <p><strong>Chức danh:</strong> ${person['Chức danh']}</p>
-                        <p><strong>Mã CB:</strong> ${person['Mã CB']}</p>
-                        <p><strong>Đơn vị:</strong> ${person['Tên CN']}</p>
-                        <p><strong>Mã CN:</strong> ${person['Mã CN']}</p>
-                    </div>
-
-                    <div class="vote-btn-wrapper">
-                        <button class="vote-btn" onclick="goToVotePage(event, this)">Chấm điểm</button>
-                    </div>
-                `;
-                card.addEventListener('click', function(event) {
-                    if (!event.target.classList.contains('vote-btn')) {
-                        selectCard(this);
-                    }
-                });
-                gridContainer.appendChild(card);
-                
-                // LOGIC ĐƯỢC THÊM VÀO
-                checkIfGraded(card, person);
+        async function fetchContestants() {
+            const payload = { action: "get_contestants" };
+            const response = await fetch(MASTER_FLOW_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
             });
+            if (!response.ok) throw new Error('Không thể tải danh sách thí sinh');
+            return await response.json();
         }
-        
-        // HÀM MỚI ĐƯỢC THÊM VÀO
-async function checkIfGraded(cardElement, contestantData) {
-    const judgeName = sessionStorage.getItem('loggedInUser');
-    if (!judgeName) return;
 
-    const CHECK_FLOW_URL = "https://default460cecfbf0c64dd7a5ec66ef4d75ae.63.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/664bb920ad5f4b6ebf79de6bfd08cd7e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Hpz2vM23kQzxECy0RqGx94qFOJBPDRBIxdgeCqPnAvI";
+// THAY THẾ HÀM CŨ BẰNG HÀM NÀY ĐỂ DEBUG
+async function fetchGradedStatuses() {
+    const judgeName = sessionStorage.getItem('loggedInUser');
+    if (!judgeName) return [];
 
     const payload = { 
-        BGKCHAM: judgeName, 
-        MACB: contestantData['Mã CB'],
-        gradecheck: "check"
+        action: "get_graded_statuses",
+        BGKCHAM: judgeName 
     };
 
     try {
-        const response = await fetch(CHECK_FLOW_URL, {
+        const response = await fetch(MASTER_FLOW_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-        
-        if (!response.ok) return;
-        const result = await response.json();
 
-        // SỬA LẠI ĐIỀU KIỆN IF Ở ĐÂY
-        if (result.length > 0 && result[0].status === 'graded') {
-            const tickIcon = cardElement.querySelector('.graded-tick-icon');
-            const voteButton = cardElement.querySelector('.vote-btn');
-            
-            if(tickIcon) tickIcon.style.display = 'flex';
-            if(voteButton) {
-        voteButton.classList.add('graded'); // Thêm class để đổi màu cam
-    voteButton.textContent = 'Đã chấm';   // Đổi chữ trên nút
-            }
+        if (!response.ok) return [];
+        
+        const text = await response.text();
+        if (!text) return [];
+        
+        const result = JSON.parse(text);
+        
+        if (Array.isArray(result) && result.length > 0) {
+            if (typeof result[0] === 'object' && result[0] !== null) {
+                const key = Object.keys(result[0]).find(k => k.toUpperCase().includes('MACB'));
+                return result.map(item => item[key]?.toString()).filter(Boolean);
+            } 
+            return result.map(id => id?.toString()).filter(Boolean);
         }
+        return [];
+
     } catch (error) {
-        console.error(`Lỗi khi kiểm tra thí sinh ${payload.MACB}:`, error);
+        console.error("Lỗi khi tải hoặc xử lý trạng thái đã chấm:", error);
+        return [];
     }
 }
+
+
+function renderContestants(contestantData, gradedIDs) {
+    const gridContainer = document.getElementById('contestant-grid');
+    gridContainer.innerHTML = '';
+
+    if (!contestantData || contestantData.length === 0) {
+        gridContainer.innerHTML = `<p class="grid-message">Không có thí sinh nào trong danh sách.</p>`;
+        return;
+    }
+
+    contestantData.forEach(person => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.contestant = JSON.stringify(person);
+
+        const imageIndex = person['STT'] - 1;
+        const imageUrl = (imageIndex >= 0 && imageIndex < contestantImages.length)
+            ? contestantImages[imageIndex]
+            : 'https://placehold.co/150x150/EFEFEF/333?text=No+Image';
+
+        card.innerHTML = `
+            <div class="avatar-wrapper">
+                <img src="${imageUrl}" alt="Ảnh của ${person['Họ tên']}" onerror="this.onerror=null;this.src='https://placehold.co/150x150/EFEFEF/333?text=Error';">
+                <div class="graded-tick-icon">✔️</div>
+            </div>
+            <h3>${person['Họ tên']}</h3>
+            <div class="info-section">
+                <p><strong>Chức danh:</strong> ${person['Chức danh'] || 'N/A'}</p>
+                <p><strong>Mã CB:</strong> ${person['Mã CB'] || 'N/A'}</p>
+                <p><strong>Đơn vị:</strong> ${person['Tên CN'] || 'N/A'}</p>
+            </div>
+            <div class="vote-btn-wrapper">
+                <button class="vote-btn" onclick="goToVotePage(event, this)">Chấm điểm</button>
+            </div>`;
         
-        // LUỒNG 2: Giữ nguyên
+        gridContainer.appendChild(card);
+        console.log("DANH SÁCH ID ĐÃ CHẤM NHẬN ĐƯỢC:", gradedIDs);
+        // SỬA Ở ĐÂY: Thêm .toString() khi so sánh để đảm bảo an toàn tuyệt đối
+        const isGraded = gradedIDs.includes(person['Mã CB']?.toString());
+        
+        const voteButton = card.querySelector('.vote-btn');
+        const tickIcon = card.querySelector('.graded-tick-icon');
+
+        if (isGraded) {
+            voteButton.classList.add('graded');
+            voteButton.textContent = 'Xem & Sửa điểm';
+            tickIcon.style.display = 'flex';
+        }
+    });
+}
+
         function goToVotePage(event, button) {
             event.stopPropagation();
-            
             const card = button.closest('.card');
             if (!card || !card.dataset.contestant) {
                 alert("Đã xảy ra lỗi, không thể lấy thông tin thí sinh này.");
                 return;
             }
-
             button.disabled = true;
-            button.textContent = 'Đang chuyển trang...';
-
+            button.textContent = 'Đang chuyển...';
             sessionStorage.setItem('selectedContestant', card.dataset.contestant);
-            
             window.location.href = 'vote.html';
         }
-
-        let selectedCard = null;
-
-        function selectCard(card) {
-            if (selectedCard) selectedCard.classList.remove("selected");
-            selectedCard = card;
-            card.classList.add("selected");
-        }
-
-        const btn = document.getElementById("callButton");
-        const popup = document.getElementById("contactPopup");
-        let offsetX = 0, offsetY = 0, isDown = false, moved = false;
-        let startX = 0, startY = 0;
-
-        function startDrag(clientX, clientY) { isDown = true; moved = false; startX = clientX; startY = clientY; offsetX = clientX - btn.offsetLeft; offsetY = clientY - btn.offsetTop; btn.style.transition = "none"; }
-        function moveDrag(clientX, clientY) { if (!isDown) return; const dx = clientX - startX; const dy = clientY - startY; if (Math.abs(dx) > 5 || Math.abs(dy) > 5) moved = true; btn.style.left = `${clientX - offsetX}px`; btn.style.top = `${clientY - offsetY}px`; positionPopup(); }
-        function endDrag() { if (isDown && !moved) { popup.style.display = popup.style.display === "block" ? "none" : "block"; positionPopup(); } const screenW = window.innerWidth; const btnW = btn.offsetWidth; const x = btn.offsetLeft; btn.style.left = (x > screenW / 2) ? `${screenW - btnW - 12}px` : `12px`; positionPopup(); isDown = false; btn.style.transition = "all 0.3s ease"; }
-        function positionPopup() { const rect = btn.getBoundingClientRect(); popup.style.left = `${rect.left}px`; popup.style.top = `${rect.top - popup.offsetHeight - 10}px`; }
-
-        btn.addEventListener("mousedown", (e) => startDrag(e.clientX, e.clientY));
-        document.addEventListener("mousemove", (e) => moveDrag(e.clientX, e.clientY));
-        document.addEventListener("mouseup", () => endDrag());
-        btn.addEventListener("touchstart", (e) => startDrag(e.touches[0].clientX, e.touches[0].clientY));
-        document.addEventListener("touchmove", (e) => moveDrag(e.touches[0].clientX, e.touches[0].clientY));
-        document.addEventListener("touchend", () => endDrag());
-        document.addEventListener("click", (e) => { if (!btn.contains(e.target) && !popup.contains(e.target)) { popup.style.display = "none"; } });
     </script>
 </body>
-
 </html>
