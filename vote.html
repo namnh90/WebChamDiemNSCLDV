@@ -27,13 +27,9 @@
             font-family: "Segoe UI", sans-serif;
             color: #fff;
             background: url("photo/backgroundbig.png") center/cover no-repeat fixed;
-
-            /* Cấu trúc Flexbox dọc */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            /* Quan trọng: Buộc body cao ít nhất bằng chiều cao màn hình */
-
             position: relative;
             overflow-x: hidden;
         }
@@ -69,6 +65,34 @@
             align-items: center;
         }
 
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-back svg {
+            stroke: #fff;
+            width: 20px;
+            height: 20px;
+        }
+
         .welcome-message {
             font-size: 18px;
             font-weight: 500;
@@ -93,14 +117,11 @@
         .navbar-title {
             font-family: 'Saira Stencil One', sans-serif;
             font-size: clamp(12px, 6.5vw, 40px);
-            /* Tôi đã điều chỉnh lại một chút cho cân đối hơn */
             font-weight: 700;
-
             text-align: center;
             line-height: 1.2;
             flex-grow: 1;
-            /* Cho phép tiêu đề chiếm hết không gian ở giữa */
-text-wrap: balance;
+            text-wrap: balance;
             background: linear-gradient(360deg, #ffffff 20%, #f50101 100%);
             -webkit-background-clip: text;
             background-clip: text;
@@ -108,11 +129,8 @@ text-wrap: balance;
             color: transparent;
             text-shadow:
                 0px 1px 1px rgb(24, 129, 47),
-                /* Viền sáng giả */
                 0px -0px 0px rgba(255, 255, 255),
-                /* Viền tối giả */
                 3px 3px 5px rgb(255, 255, 255);
-            /* Bóng đổ chính */
         }
 
         /* === MAIN CONTENT === */
@@ -538,9 +556,8 @@ text-wrap: balance;
             }
         }
 
-
         /* ==========================================================================
-           CSS RESPONSIVE (ĐÃ SẮP XẾP VÀ SỬA LỖI)
+           CSS RESPONSIVE
            ========================================================================== */
         @media (max-width: 1200px) {
             .table-responsive-wrapper {
@@ -612,11 +629,30 @@ text-wrap: balance;
             .navbar {
                 height: 80px;
             }
-
+            
+            .welcome-message,
+            .nav-side.logo {
+                display: none;
+            }
+            
             .nav-side {
+                width: auto;
+                flex-shrink: 0;
+            }
+            
+            .btn-back {
+                padding: 8px;
+                margin-right: 0;
+            }
+
+            .btn-back span {
                 display: none;
             }
 
+            .navbar-title {
+                margin: 0 10px;
+            }
+            
             main {
                 padding: 20px 15px 50px;
             }
@@ -728,6 +764,12 @@ text-wrap: balance;
 <body>
     <div class="navbar">
         <div class="nav-side">
+            <a href="homepage.html" class="btn-back" title="Quay về trang chủ">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                <span>Quay lại</span>
+            </a>
             <div class="welcome-message" id="welcome-judge"></div>
         </div>
         <h1 class="navbar-title" data-text="Chấm điểm thí sinh">
@@ -774,9 +816,7 @@ text-wrap: balance;
                                         lý do lựa chọn sáng kiến thuyết phục</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -790,9 +830,7 @@ text-wrap: balance;
                                         VCB. Rõ nét sáng tạo, có tính đột phá</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -808,9 +846,7 @@ text-wrap: balance;
                                         được hiệu quả</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -825,9 +861,7 @@ text-wrap: balance;
                                         năng triển khai nhân rộng cao, có lộ trình rõ ràng và thuyết phục</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -842,9 +876,7 @@ text-wrap: balance;
                                         mạnh, chuyên nghiệp</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -861,8 +893,7 @@ text-wrap: balance;
                     </div>
                     <div class="content-block">
                         <h3>Nhận xét Phần thi 1</h3>
-                        <textarea class="comment-box" id="comment-part1"
-                            placeholder="Nhập đánh giá tổng thể về Phần thi 1 của thí sinh..."></textarea>
+                        <textarea class="comment-box" id="comment-part1" placeholder="Nhập đánh giá tổng thể về Phần thi 1 của thí sinh..."></textarea>
                     </div>
                     <div class="actions-container">
                         <button id="submit-btn-1" class="submit-btn"> <span class="btn-text">Gửi Điểm Phần 1</span>
@@ -895,9 +926,7 @@ text-wrap: balance;
                                         tình huống.</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -911,9 +940,7 @@ text-wrap: balance;
                                         Ngôn từ chuẩn mực, ngữ điệu truyền cảm, giao tiếp hiệu quả.</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -929,9 +956,7 @@ text-wrap: balance;
                                         trấn an khách hàng một cách chân thành.</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -946,9 +971,7 @@ text-wrap: balance;
                                     </td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -963,9 +986,7 @@ text-wrap: balance;
                                     </td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -983,9 +1004,7 @@ text-wrap: balance;
                                         khách hàng trở lại trạng thái hợp tác</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -999,9 +1018,7 @@ text-wrap: balance;
                                         nhịp nhàng và hiệu quả.</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -1015,9 +1032,7 @@ text-wrap: balance;
                                         thông điệp.</td>
                                     <td class="score-cell">
                                         <div class="slider-container"><span class="slider-value">0</span>
-                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0"
-                                                    value="0" step="1"></div><button class="btn-goto-max"
-                                                title="Điểm tối đa"></button>
+                                            <div class="slider-wrapper"><input type="range" class="score-slider" min="0" value="0" step="1"></div><button class="btn-goto-max" title="Điểm tối đa"></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -1034,8 +1049,7 @@ text-wrap: balance;
                     </div>
                     <div class="content-block">
                         <h3>Nhận xét Phần thi 2</h3>
-                        <textarea class="comment-box" id="comment-part2"
-                            placeholder="Nhập đánh giá tổng thể về Phần thi 2 của thí sinh..."></textarea>
+                        <textarea class="comment-box" id="comment-part2" placeholder="Nhập đánh giá tổng thể về Phần thi 2 của thí sinh..."></textarea>
                     </div>
                     <div class="actions-container">
                         <button id="submit-btn-2" class="submit-btn"> <span class="btn-text">Gửi Điểm Phần 2</span>
@@ -1056,6 +1070,15 @@ text-wrap: balance;
 
         // --- LOGIC CHÍNH KHI TRANG TẢI XONG ---
         document.addEventListener('DOMContentLoaded', function () {
+            // === START: THÊM CƠ CHẾ KIỂM TRA ĐĂNG NHẬP ===
+            const loggedInUser = sessionStorage.getItem('loggedInUser');
+            if (!loggedInUser) {
+                alert("⚠️ Bạn cần đăng nhập để truy cập trang này. Vui lòng đăng nhập lại.");
+                window.location.href = 'index.html'; // Chuyển hướng về trang đăng nhập
+                return; // Dừng thực thi các mã còn lại để tránh lỗi
+            }
+            // === END: KIỂM TRA ĐĂNG NHẬP ===
+            
             // Gán sự kiện cho các tab
             document.querySelector('.tab-nav').addEventListener('click', (e) => {
                 if (e.target.matches('.tab-link')) {

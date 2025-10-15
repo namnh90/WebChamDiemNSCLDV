@@ -76,11 +76,12 @@
 
         .navbar-title {
             font-family: 'Saira Stencil One', sans-serif;
-            font-size: clamp(45px, 6vw, 80px);
+            font-size: clamp(12px, 6.5vw, 40px);
             font-weight: 700;
             text-align: center;
             line-height: 1.2;
             flex-grow: 1;
+            text-wrap: balance;
             background: linear-gradient(360deg, #ffffff 20%, #f50101 100%);
             -webkit-background-clip: text;
             background-clip: text;
@@ -111,7 +112,7 @@
             align-items: center;
         }
 
-        .page-title {
+        .page-title { /* Vẫn giữ lại class này phòng khi bạn muốn dùng lại */
             font-size: 28px;
             font-weight: 600;
             margin-bottom: 20px;
@@ -147,7 +148,36 @@
             z-index: 2;
         }
 
-        /* === Leaderboard Style === */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .filter-btn.active {
+            background-color: var(--green-dark);
+            color: white;
+            border-color: var(--green-light);
+            box-shadow: 0 4px 15px rgba(0, 104, 55, .3);
+        }
+
         .leaderboard-wrapper {
             overflow-x: auto;
             border-radius: 16px;
@@ -173,9 +203,8 @@
             color: #fff;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            /* === THAY ĐỔI CSS === */
-            white-space: normal; /* Cho phép tiêu đề xuống dòng */
-            vertical-align: middle; /* Căn giữa khi tiêu đề có 2 dòng */
+            white-space: normal;
+            vertical-align: middle;
         }
 
         .leaderboard tbody tr {
@@ -192,12 +221,10 @@
         .leaderboard td {
             padding: 10px 12px;
             vertical-align: middle;
-            /* === THAY ĐỔI CSS === */
-            white-space: normal; /* Cho phép nội dung trong ô xuống dòng */
-            word-break: break-word; /* Bẻ gãy từ nếu cần thiết (cho tên hoặc đơn vị quá dài) */
+            white-space: normal;
+            word-break: break-word;
         }
 
-        /* Rank colors */
         .leaderboard tr.gold {
             background: linear-gradient(90deg, #ffd70055, #ffcc0066);
             font-weight: bold;
@@ -211,13 +238,12 @@
             background: linear-gradient(90deg, #cd7f3255, #d79f4f66);
         }
 
-        /* Avatar */
         .user-cell {
             display: flex;
             align-items: center;
             gap: 12px;
             text-align: left;
-            min-width: 250px; /* Đặt chiều rộng tối thiểu cho cột thí sinh */
+            min-width: 250px;
         }
 
         .user-cell .avatar {
@@ -258,7 +284,6 @@
             color: #e0e0e0;
         }
 
-        /* === Export button === */
         .admin-actions {
             display: flex;
             justify-content: flex-end;
@@ -282,7 +307,6 @@
             background: linear-gradient(90deg, #00b26b, #009157);
         }
 
-        /* === Responsive Styles === */
         @media (max-width: 992px) {
             .navbar-title {
                 font-size: clamp(24px, 4vw, 36px);
@@ -299,21 +323,10 @@
                 display: none;
             }
 
-            .user-cell .name {
-                font-size: 14px;
-            }
-
-            .user-cell .code {
-                font-size: 12px;
-            }
-
-            .leaderboard td,
-            .leaderboard th {
-                padding: 8px;
-            }
-            .leaderboard thead {
-                display: none;
-            }
+            .user-cell .name { font-size: 14px; }
+            .user-cell .code { font-size: 12px; }
+            .leaderboard td, .leaderboard th { padding: 8px; }
+            .leaderboard thead { display: none; }
             .leaderboard tbody tr {
                 display: flex;
                 flex-direction: column;
@@ -337,7 +350,7 @@
                 color: #a0ffda;
                 flex-shrink: 0;
             }
-            .leaderboard tbody tr td > span {
+            .leaderboard tbody tr td>span {
                 flex-grow: 1;
                 text-align: right;
             }
@@ -346,15 +359,10 @@
                 flex-direction: row;
                 align-items: center;
                 gap: 12px;
-                min-width: unset; /* Bỏ min-width ở dạng thẻ */
+                min-width: unset;
             }
-            .leaderboard td b {
-                font-size: 18px;
-                color: #fff;
-            }
-            .leaderboard {
-    min-width: 0; /* Cho phép bảng co lại hoàn toàn theo kích thước thẻ */
-}
+            .leaderboard td b { font-size: 18px; color: #fff; }
+            .leaderboard { min-width: 0; }
         }
     </style>
 </head>
@@ -370,8 +378,12 @@
         </div>
     </div>
     <main>
-        <h2 class="page-title">ĐIỂM CHUNG CUỘC</h2>
         <div class="admin-panel">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="overall">Chung cuộc</button>
+                <button class="filter-btn" data-filter="part1">Phần 1: Sáng kiến</button>
+                <button class="filter-btn" data-filter="part2">Phần 2: Tình huống</button>
+            </div>
             <div class="admin-actions">
                 <button id="exportBtn" class="export-btn" onclick="exportToExcel()">⬇️ Xuất Excel</button>
             </div>
@@ -386,16 +398,16 @@
 
     <script>
         const MASTER_FLOW_URL = "https://default460cecfbf0c64dd7a5ec66ef4d75ae.63.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/664bb920ad5f4b6ebf79de6bfd08cd7e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Hpz2vM23kQzxECy0RqGx94qFOJBPDRBIxdgeCqPnAvI";
-        const ADMIN_USERS = ['ADMIN', 'BGK1'];
+        const ADMIN_USERS = ['ADMIN'];
         
-        // === THAY ĐỔI JAVASCRIPT: Rút gọn tên để hiển thị ===
         const JUDGES = [
-            { id: 'BGK1', name: 'Điểm Giám khảo 1', short: 'Đ.GK 1' }, 
+            { id: 'BGK1', name: 'Điểm Giám khảo 1', short: 'Đ.GK 1' },
             { id: 'BGK2', name: 'Điểm Giám khảo 2', short: 'Đ.GK 2' },
-            { id: 'BGK3', name: 'Điểm Giám khảo 3', short: 'Đ.GK 3' }, 
-            { id: 'BGK4', name: 'Điểm Giám khảo 4', short: 'Đ.GK 4' },
-            { id: 'BGK5', name: 'Điểm Giám khảo 5', short: 'Đ.GK 5' }
+            { id: 'BGK3', name: 'Điểm Giám khảo 3', short: 'Đ.GK 3' },
+            { id: 'BGK4', name: 'Điểm Giám khảo 4', short: 'Đ.GK 4' }
         ];
+
+        let processedContestantData = [];
 
         document.addEventListener('DOMContentLoaded', function () {
             const loggedInUser = sessionStorage.getItem('loggedInUser');
@@ -406,6 +418,15 @@
             }
             checkAdminStatus(loggedInUser);
             fetchAllAdminData();
+
+            document.querySelector('.filter-buttons').addEventListener('click', (e) => {
+                if (e.target.matches('.filter-btn')) {
+                    const filter = e.target.dataset.filter;
+                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    renderTable(processedContestantData, filter);
+                }
+            });
         });
 
         function checkAdminStatus(loggedInUser) {
@@ -421,189 +442,100 @@
                     fetchContestants(),
                     fetchAllScores()
                 ]);
-                const processedData = processData(contestants, allScores);
-                renderTable(processedData);
+                processedContestantData = processData(contestants, allScores);
+                renderTable(processedContestantData, 'overall');
             } catch (error) {
                 console.error("LỖI NGHIÊM TRỌNG khi tải dữ liệu:", error);
                 document.getElementById('admin-table-container').innerHTML = `<p style="color: #ffdddd; text-align: center;">Lỗi tải dữ liệu: ${error.message}</p>`;
             }
         }
-        
-        async function exportToExcel() {
-            const btn = document.getElementById("exportBtn");
-            btn.disabled = true;
-            btn.textContent = "⏳ Đang xuất Excel...";
 
-            try {
-                const payload = { action: "get_all_scores" };
-                const res = await fetch(MASTER_FLOW_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!res.ok) throw new Error("Không thể tải dữ liệu JSON từ Flow");
-                const json = await res.json();
-                if (!Array.isArray(json) || json.length === 0) {
-                    alert("⚠️ Không có dữ liệu để xuất Excel!");
-                    return;
-                }
-
-                const allCriteria = new Set();
-                json.forEach(item => {
-                    try {
-                        const data = JSON.parse(item.JSONDATA || "{}");
-                        const details = data?.scores?.details || [];
-                        details.forEach(d => allCriteria.add(d.criterion));
-                    } catch (e) { }
-                });
-
-                const flattened = json.map(item => {
-                    let parsed = {};
-                    try {
-                        parsed = JSON.parse(item.JSONDATA || "{}");
-                    } catch {
-                        parsed = {};
-                    }
-
-                    const details = parsed.scores?.details || [];
-                    const scoreMap = {};
-                    details.forEach(d => {
-                        scoreMap[d.criterion] = d.score;
-                    });
-
-                    const row = {
-                        REF: item.REF || "",
-                        BGKCHAM: item.BGKCHAM || parsed.judge || "",
-                        MACB: item.MACB || "",
-                        TENCB: item.TENCB || item.TenCB || "",
-                        CHINHANH: item.CHINHANH || "",
-                        PART: parsed.part || "",
-                        TOTAL: parsed.scores?.total || "",
-                        COMMENT: parsed.scores?.comment || "",
-                        SUBMISSION_TIME: parsed.submissionTimestamp || ""
-                    };
-
-                    allCriteria.forEach(c => {
-                        row[c] = scoreMap[c] || "";
-                    });
-
-                    return row;
-                });
-
-                const criteriaCols = Array.from(allCriteria);
-                const baseCols = ["REF", "BGKCHAM", "MACB", "TENCB", "CHINHANH", "PART", "TOTAL", "COMMENT", "SUBMISSION_TIME"];
-                const finalCols = [...baseCols, ...criteriaCols];
-
-                const worksheet = XLSX.utils.json_to_sheet(flattened, { header: finalCols });
-                const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, "BangDiemChiTiet");
-
-                const colWidths = finalCols.map(k => ({ wch: Math.max(20, k.length + 2) }));
-                worksheet["!cols"] = colWidths;
-
-                const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-                const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "Bang_Diem_Chi_Tiet.xlsx";
-                a.click();
-                URL.revokeObjectURL(url);
-
-                alert("✅ Xuất Excel thành công (đã bóc toàn bộ tiêu chí)!");
-            } catch (err) {
-                console.error("❌ Lỗi export Excel:", err);
-                alert("⚠️ Lỗi khi xuất Excel. Kiểm tra console để biết chi tiết.");
-            } finally {
-                btn.disabled = false;
-                btn.textContent = "⬇️ Xuất Excel";
-            }
-        }
-
-        async function fetchContestants() {
-            const payload = { action: "get_contestants" };
-            const response = await fetch(MASTER_FLOW_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            if (!response.ok) throw new Error('Không thể tải danh sách thí sinh');
-            return await response.json();
-        }
-
-        async function fetchAllScores() {
-            const payload = { action: "get_all_scores" };
-            const response = await fetch(MASTER_FLOW_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            if (!response.ok) throw new Error('Không thể tải danh sách điểm');
-            return await response.json();
-        }
-        
         function processData(contestants, allScores) {
-            console.groupCollapsed("📊 [processData] Bắt đầu xử lý dữ liệu");
-            console.time("⏱ Tổng thời gian xử lý");
             const dataMap = new Map();
-            contestants.forEach((p, i) => {
-                const macb = p["Mã CB"] || p["MACB"];
-                if (!macb) {
-                    console.warn(`⚠️ [${i + 1}] Thiếu Mã CB`, p);
-                    return;
+            contestants.forEach(p => {
+                const macb = p["Mã CB"];
+                if (macb) {
+                    dataMap.set(macb.toString().trim(), {
+                        ...p,
+                        scoresByJudge: {},
+                        finalScore: 0,
+                        part1Score: 0,
+                        part2Score: 0
+                    });
                 }
-                const key = macb.toString().trim();
-                dataMap.set(key, {
-                    ...p,
-                    scoresByJudge: {},
-                    finalScore: 0
-                });
             });
-            let matched = 0, unmatched = 0, parseError = 0;
-            allScores.forEach((score, i) => {
+
+            allScores.forEach(score => {
                 try {
                     const ref = (score.REF || "").trim();
-                    if (ref.length < 6) {
-                        console.warn(`⚠️ REF quá ngắn: ${ref}`);
-                        return;
-                    }
+                    if (ref.length < 6) return;
                     const judge = ref.substring(0, 4);
                     const part = ref.slice(-1);
                     const macb = ref.substring(4, ref.length - 1);
                     const jsonData = JSON.parse(score.JSONDATA || "{}");
                     const total = parseInt(jsonData?.scores?.total, 10) || 0;
-                    if (!macb || !dataMap.has(macb)) {
-                        unmatched++;
-                        console.warn(`⚠️ Không tìm thấy thí sinh có MACB='${macb}' (REF=${ref})`);
-                        return;
-                    }
+                    if (!macb || !dataMap.has(macb)) return;
+                    
                     const contestant = dataMap.get(macb);
                     if (!contestant.scoresByJudge[judge]) contestant.scoresByJudge[judge] = {};
                     contestant.scoresByJudge[judge][`part${part}`] = total;
-                    matched++;
-                } catch (e) {
-                    parseError++;
-                    console.error(`❌ Lỗi parse JSONDATA record #${i + 1}:`, e);
-                }
+                } catch (e) { /* ignore parse errors */ }
             });
-            console.log(`📈 Gộp điểm: ${matched} match | ${unmatched} không match | ${parseError} lỗi JSON`);
-            let withScore = 0, withoutScore = 0;
+
             dataMap.forEach(contestant => {
-                let grandTotal = 0, judgeCount = 0;
+                let weightedTotalSum = 0, judgeCount = 0;
+                let part1Total = 0, part1Count = 0;
+                let part2Total = 0, part2Count = 0;
+
                 Object.values(contestant.scoresByJudge).forEach(judgeScores => {
-                    const totalFromJudge = (judgeScores.part1 || 0) + (judgeScores.part2 || 0);
-                    if (totalFromJudge > 0) {
-                        grandTotal += totalFromJudge;
+                    const part1 = judgeScores.part1 || 0;
+                    const part2 = judgeScores.part2 || 0;
+                    
+                    if (part1 > 0) {
+                        part1Total += part1;
+                        part1Count++;
+                    }
+                    if (part2 > 0) {
+                        part2Total += part2;
+                        part2Count++;
+                    }
+
+                    if (part1 > 0 || part2 > 0) {
+                        weightedTotalSum += (part1 * 0.5) + (part2 * 0.5);
                         judgeCount++;
                     }
                 });
-                contestant.finalScore = judgeCount ? (grandTotal / judgeCount).toFixed(2) : 0;
-                if (judgeCount) withScore++; else withoutScore++;
+
+                contestant.finalScore = judgeCount ? (weightedTotalSum / judgeCount).toFixed(2) : 0;
+                contestant.part1Score = part1Count ? (part1Total / part1Count).toFixed(2) : 0;
+                contestant.part2Score = part2Count ? (part2Total / part2Count).toFixed(2) : 0;
             });
-            console.log(`📊 Có điểm: ${withScore} | Chưa có điểm: ${withoutScore}`);
-            console.timeEnd("⏱ Tổng thời gian xử lý");
-            console.groupEnd();
+            
             return Array.from(dataMap.values());
         }
 
-        function renderTable(data) {
+        function renderTable(data, filter = 'overall') {
             const container = document.getElementById('admin-table-container');
-            const contestantImages = ['photo/user1.jpg', 'photo/user2.jpg', 'photo/user3.jpg', 'photo/user4.jpg', 'photo/user5.jpg', 'photo/user6.jpg', 'photo/user7.jpg', 'photo/user8.jpg', 'photo/user9.jpg', 'photo/user10.jpg'];
-            data.sort((a, b) => (parseFloat(b.finalScore) || 0) - (parseFloat(a.finalScore) || 0));
+            let sortKey, title;
+
+            switch (filter) {
+                case 'part1':
+                    sortKey = 'part1Score';
+                    title = 'Điểm P.1';
+                    break;
+                case 'part2':
+                    sortKey = 'part2Score';
+                    title = 'Điểm P.2';
+                    break;
+                default:
+                    sortKey = 'finalScore';
+                    title = 'Điểm TB';
+            }
             
+            data.sort((a, b) => (parseFloat(b[sortKey]) || 0) - (parseFloat(a[sortKey]) || 0));
+
+            const contestantImages = ['photo/user1.jpg', 'photo/user2.jpg', 'photo/user3.jpg', 'photo/user4.jpg', 'photo/user5.jpg', 'photo/user6.jpg', 'photo/user7.jpg', 'photo/user8.jpg', 'photo/user9.jpg', 'photo/user10.jpg'];
+
             let html = `
             <div class="leaderboard-wrapper">
               <table class="leaderboard">
@@ -613,15 +545,13 @@
                     <th>Thí sinh</th>
                     <th>Đơn vị</th>
                     ${JUDGES.map(j => `<th title="${j.name}">${j.short}</th>`).join('')}
-                    <th>Điểm TB</th>
-                    <th>Xếp loại</th>
+                    <th>${title}</th>
                   </tr>
                 </thead>
                 <tbody>`;
 
             data.forEach((p, i) => {
                 const rank = i + 1;
-                const rating = getRating(p.finalScore);
                 const img = contestantImages[i % contestantImages.length];
                 const highlightClass = rank === 1 ? "gold" : rank === 2 ? "silver" : rank === 3 ? "bronze" : "";
 
@@ -635,11 +565,21 @@
                   <td data-label="Đơn vị"><span>${p["Tên CN"] || ""}</span></td>
                   ${JUDGES.map(j => {
                     const s = p.scoresByJudge[j.id];
-                    const total = s ? (s.part1 || 0) + (s.part2 || 0) : 0;
-                    return `<td data-label="${j.name}"><span>${total || "-"}</span></td>`;
+                    let scoreToShow;
+                    switch(filter) {
+                        case 'part1':
+                            scoreToShow = s?.part1 || '-';
+                            break;
+                        case 'part2':
+                            scoreToShow = s?.part2 || '-';
+                            break;
+                        default: 
+                            scoreToShow = s ? (s.part1 || 0) + (s.part2 || 0) : "-";
+                            if(scoreToShow === 0) scoreToShow = "-";
+                    }
+                    return `<td data-label="${j.name}"><span>${scoreToShow}</span></td>`;
                 }).join('')}
-                  <td data-label="Điểm TB"><span><b>${p.finalScore || 0}</b></span></td>
-                  <td data-label="Xếp loại"><span>${rating}</span></td>
+                  <td data-label="${title}"><span><b>${p[sortKey] || 0}</b></span></td>
                 </tr>`;
             });
 
@@ -647,15 +587,8 @@
             container.innerHTML = html;
         }
 
-        function getRating(score) {
-            const numericScore = parseFloat(score);
-            if (isNaN(numericScore) || numericScore <= 0) return 'Chưa có';
-            if (numericScore >= 90) return 'Xuất sắc';
-            if (numericScore >= 80) return 'Giỏi';
-            if (numericScore >= 65) return 'Khá';
-            if (numericScore >= 50) return 'Trung bình';
-            return 'Cần cố gắng';
-        }
+        async function fetchContestants(){const payload={action:"get_contestants"};const response=await fetch(MASTER_FLOW_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!response.ok)throw new Error('Không thể tải danh sách thí sinh');return await response.json()}async function fetchAllScores(){const payload={action:"get_all_scores"};const response=await fetch(MASTER_FLOW_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!response.ok)throw new Error('Không thể tải danh sách điểm');return await response.json()}async function exportToExcel(){const btn=document.getElementById("exportBtn");btn.disabled=true;btn.textContent="⏳ Đang xuất Excel...";try{const payload={action:"get_all_scores"};const res=await fetch(MASTER_FLOW_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});if(!res.ok)throw new Error("Không thể tải dữ liệu JSON từ Flow");const json=await res.json();if(!Array.isArray(json)||json.length===0){alert("⚠️ Không có dữ liệu để xuất Excel!");return}const allCriteria=new Set;json.forEach(item=>{try{const data=JSON.parse(item.JSONDATA||"{}");const details=data?.scores?.details||[];details.forEach(d=>allCriteria.add(d.criterion))}catch(e){}});const flattened=json.map(item=>{let parsed={};try{parsed=JSON.parse(item.JSONDATA||"{}")}catch{parsed={}}const details=parsed.scores?.details||[];const scoreMap={};details.forEach(d=>{scoreMap[d.criterion]=d.score});const row={REF:item.REF||"",BGKCHAM:item.BGKCHAM||parsed.judge||"",MACB:item.MACB||"",TENCB:item.TENCB||item.TenCB||"",CHINHANH:item.CHINHANH||"",PART:parsed.part||"",TOTAL:parsed.scores?.total||"",COMMENT:parsed.scores?.comment||"",SUBMISSION_TIME:parsed.submissionTimestamp||""};allCriteria.forEach(c=>{row[c]=scoreMap[c]||""});return row});const criteriaCols=Array.from(allCriteria);const baseCols=["REF","BGKCHAM","MACB","TENCB","CHINHANH","PART","TOTAL","COMMENT","SUBMISSION_TIME"];const finalCols=[...baseCols,...criteriaCols];const worksheet=XLSX.utils.json_to_sheet(flattened,{header:finalCols});const workbook=XLSX.utils.book_new();XLSX.utils.book_append_sheet(workbook,worksheet,"BangDiemChiTiet");const colWidths=finalCols.map(k=>({wch:Math.max(20,k.length+2)}));worksheet["!cols"]=colWidths;const excelBuffer=XLSX.write(workbook,{bookType:"xlsx",type:"array"});const blob=new Blob([excelBuffer],{type:"application/octet-stream"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="Bang_Diem_Chi_Tiet.xlsx";a.click();URL.revokeObjectURL(url);alert("✅ Xuất Excel thành công (đã bóc toàn bộ tiêu chí)!")}catch(err){console.error("❌ Lỗi export Excel:",err);alert("⚠️ Lỗi khi xuất Excel. Kiểm tra console để biết chi tiết.")}finally{btn.disabled=false;btn.textContent="⬇️ Xuất Excel"}}
     </script>
 </body>
+
 </html>
