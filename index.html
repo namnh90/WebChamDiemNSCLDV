@@ -28,23 +28,23 @@
             position: relative;
             overflow-y: auto;
             overflow-x: auto;
-            padding-top: 50px;
-            /* Tạo khoảng trống ở đầu trang */
+            padding-top: 20px;
             box-sizing: border-box;
             /* Đảm bảo padding không làm thay đổi kích thước tổng */
         }
 
         .navbar-title {
             font-family: 'Saira Stencil One', sans-serif;
-            font-size: clamp(45px, 6vw, 80px);
+            font-size: clamp(12px, 6.5vw, 40px);
             /* Tôi đã điều chỉnh lại một chút cho cân đối hơn */
             font-weight: 700;
-
+            text-wrap: balance;
+            /* Thêm dòng này */
             text-align: center;
             line-height: 1.2;
             flex-grow: 1;
             /* Cho phép tiêu đề chiếm hết không gian ở giữa */
-
+  text-wrap: balance;
             background: linear-gradient(360deg, #ffffff 20%, #f50101 100%);
             -webkit-background-clip: text;
             background-clip: text;
@@ -417,7 +417,7 @@
     <div class="navbar">
         <div class="nav-side"></div>
 
-        <h1 class="navbar-title">Chung kết Ngôi sao Chất lượng Dịch vụ</h1>
+        <h1 class="navbar-title">Ngôi sao Chất lượng Dịch vụ</h1>
 
         <div class="nav-side logo">
             <img src="photo\logo.png" alt="Logo">
