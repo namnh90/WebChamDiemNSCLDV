@@ -112,14 +112,6 @@
             align-items: center;
         }
 
-        .page-title { /* Vẫn giữ lại class này phòng khi bạn muốn dùng lại */
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #e8f9f0;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-        }
-
         .admin-panel {
             width: 100%;
             max-width: none;
@@ -195,6 +187,10 @@
             text-align: center;
             min-width: 800px;
         }
+        
+        .leaderboard.detailed {
+           min-width: 1200px;
+        }
 
         .leaderboard thead th {
             background: linear-gradient(90deg, #009f6b, #007f52);
@@ -205,6 +201,20 @@
             letter-spacing: 0.5px;
             white-space: normal;
             vertical-align: middle;
+        }
+        
+        .leaderboard.detailed thead .group-header {
+            background: #007f52;
+        }
+
+        .leaderboard.detailed thead .sub-header {
+            font-size: 0.9em;
+            font-weight: 600;
+            padding: 8px;
+        }
+        
+        .leaderboard.detailed .judge-divider {
+            border-right: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .leaderboard tbody tr {
@@ -322,7 +332,9 @@
             .nav-side {
                 display: none;
             }
-
+            .leaderboard.detailed .judge-divider {
+                border: none;
+            }
             .user-cell .name { font-size: 14px; }
             .user-cell .code { font-size: 12px; }
             .leaderboard td, .leaderboard th { padding: 8px; }
@@ -349,6 +361,7 @@
                 font-weight: 600;
                 color: #a0ffda;
                 flex-shrink: 0;
+                width: 110px;
             }
             .leaderboard tbody tr td>span {
                 flex-grow: 1;
@@ -362,7 +375,7 @@
                 min-width: unset;
             }
             .leaderboard td b { font-size: 18px; color: #fff; }
-            .leaderboard { min-width: 0; }
+            .leaderboard, .leaderboard.detailed { min-width: 0; }
         }
     </style>
 </head>
@@ -381,8 +394,7 @@
         <div class="admin-panel">
             <div class="filter-buttons">
                 <button class="filter-btn active" data-filter="overall">Chung cuộc</button>
-                <button class="filter-btn" data-filter="part1">Phần 1: Sáng kiến</button>
-                <button class="filter-btn" data-filter="part2">Phần 2: Tình huống</button>
+                <button class="filter-btn" data-filter="detailed">Điểm từng phần</button>
             </div>
             <div class="admin-actions">
                 <button id="exportBtn" class="export-btn" onclick="exportToExcel()">⬇️ Xuất Excel</button>
@@ -407,6 +419,23 @@
             { id: 'BGK4', name: 'Điểm Giám khảo 4', short: 'Đ.GK 4' }
         ];
 
+        // ✅ BƯỚC 1: Thêm dữ liệu mapping STT và Mã CB bạn đã cung cấp
+        const contestantSttData = [
+            {"STT":1, "Mã CB":52244},
+            {"STT":2, "Mã CB":49065},
+            {"STT":3, "Mã CB":42401},
+            {"STT":4, "Mã CB":37092},
+            {"STT":5, "Mã CB":38356},
+            {"STT":6, "Mã CB":33173},
+            {"STT":7, "Mã CB":54503},
+            {"STT":8, "Mã CB":54897},
+            {"STT":9, "Mã CB":47649},
+            {"STT":10, "Mã CB":38492}
+        ];
+
+        // Tạo một Map để tra cứu STT từ Mã CB một cách nhanh chóng
+        const macbToSttMap = new Map(contestantSttData.map(item => [String(item["Mã CB"]), item.STT]));
+
         let processedContestantData = [];
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -418,7 +447,7 @@
             }
             checkAdminStatus(loggedInUser);
             fetchAllAdminData();
-
+            
             document.querySelector('.filter-buttons').addEventListener('click', (e) => {
                 if (e.target.matches('.filter-btn')) {
                     const filter = e.target.dataset.filter;
@@ -455,8 +484,13 @@
             contestants.forEach(p => {
                 const macb = p["Mã CB"];
                 if (macb) {
-                    dataMap.set(macb.toString().trim(), {
+                    const macbStr = String(macb).trim();
+                    // ✅ BƯỚC 2: Thêm STT vào dữ liệu của mỗi thí sinh
+                    const stt = macbToSttMap.get(macbStr);
+
+                    dataMap.set(macbStr, {
                         ...p,
+                        STT: stt, // Gán STT vào đây
                         scoresByJudge: {},
                         finalScore: 0,
                         part1Score: 0,
@@ -516,27 +550,25 @@
 
         function renderTable(data, filter = 'overall') {
             const container = document.getElementById('admin-table-container');
-            let sortKey, title;
+            data.sort((a, b) => (parseFloat(b.finalScore) || 0) - (parseFloat(a.finalScore) || 0));
 
-            switch (filter) {
-                case 'part1':
-                    sortKey = 'part1Score';
-                    title = 'Điểm P.1';
-                    break;
-                case 'part2':
-                    sortKey = 'part2Score';
-                    title = 'Điểm P.2';
-                    break;
-                default:
-                    sortKey = 'finalScore';
-                    title = 'Điểm TB';
-            }
+            // Không cần mảng images cũ nữa
+
+            let html;
             
-            data.sort((a, b) => (parseFloat(b[sortKey]) || 0) - (parseFloat(a[sortKey]) || 0));
+            if(filter === 'detailed') {
+                html = renderDetailedTable(data);
+            } else {
+                html = renderOverallTable(data);
+            }
 
-            const contestantImages = ['photo/user1.jpg', 'photo/user2.jpg', 'photo/user3.jpg', 'photo/user4.jpg', 'photo/user5.jpg', 'photo/user6.jpg', 'photo/user7.jpg', 'photo/user8.jpg', 'photo/user9.jpg', 'photo/user10.jpg'];
-
-            let html = `
+            container.innerHTML = html;
+        }
+        
+        // Không cần hàm getStableImage nữa
+        
+        function renderOverallTable(data){
+            let tableHtml = `
             <div class="leaderboard-wrapper">
               <table class="leaderboard">
                 <thead>
@@ -545,17 +577,18 @@
                     <th>Thí sinh</th>
                     <th>Đơn vị</th>
                     ${JUDGES.map(j => `<th title="${j.name}">${j.short}</th>`).join('')}
-                    <th>${title}</th>
+                    <th>Điểm TB</th>
                   </tr>
                 </thead>
                 <tbody>`;
 
             data.forEach((p, i) => {
                 const rank = i + 1;
-                const img = contestantImages[i % contestantImages.length];
+                // ✅ BƯỚC 3: Dựng đường dẫn ảnh trực tiếp từ STT
+                const img = p.STT ? `photo/user${p.STT}.jpg` : 'photo/default-avatar.png';
                 const highlightClass = rank === 1 ? "gold" : rank === 2 ? "silver" : rank === 3 ? "bronze" : "";
 
-                html += `
+                tableHtml += `
                 <tr class="${highlightClass}">
                   <td data-label="Hạng"><span><b>#${rank}</b></span></td>
                   <td data-label="Thí sinh" class="user-cell">
@@ -564,27 +597,62 @@
                   </td>
                   <td data-label="Đơn vị"><span>${p["Tên CN"] || ""}</span></td>
                   ${JUDGES.map(j => {
-                    const s = p.scoresByJudge[j.id];
-                    let scoreToShow;
-                    switch(filter) {
-                        case 'part1':
-                            scoreToShow = s?.part1 || '-';
-                            break;
-                        case 'part2':
-                            scoreToShow = s?.part2 || '-';
-                            break;
-                        default: 
-                            scoreToShow = s ? (s.part1 || 0) + (s.part2 || 0) : "-";
-                            if(scoreToShow === 0) scoreToShow = "-";
-                    }
-                    return `<td data-label="${j.name}"><span>${scoreToShow}</span></td>`;
-                }).join('')}
-                  <td data-label="${title}"><span><b>${p[sortKey] || 0}</b></span></td>
+                      const s = p.scoresByJudge[j.id];
+                      let scoreToShow = s ? ((s.part1 || 0) * 0.5) + ((s.part2 || 0) * 0.5) : "-";
+                      if(typeof scoreToShow === 'number') scoreToShow = scoreToShow.toFixed(2);
+                      if(scoreToShow === "0.00") scoreToShow = "-";
+                      return `<td data-label="${j.name}"><span>${scoreToShow}</span></td>`;
+                  }).join('')}
+                  <td data-label="Điểm TB"><span><b>${p.finalScore || 0}</b></span></td>
                 </tr>`;
             });
 
-            html += `</tbody></table></div>`;
-            container.innerHTML = html;
+            tableHtml += `</tbody></table></div>`;
+            return tableHtml;
+        }
+        
+        function renderDetailedTable(data){
+             let tableHtml = `
+            <div class="leaderboard-wrapper">
+              <table class="leaderboard detailed">
+                <thead>
+                  <tr>
+                    <th rowspan="2">🏆 Hạng</th>
+                    <th rowspan="2">Thí sinh</th>
+                    <th rowspan="2">Đơn vị</th>
+                    ${JUDGES.map(j => `<th class="group-header" colspan="2">${j.name}</th>`).join('')}
+                  </tr>
+                  <tr>
+                    ${JUDGES.map(() => `<th class="sub-header">P.1</th><th class="sub-header judge-divider">P.2</th>`).join('')}
+                  </tr>
+                </thead>
+                <tbody>`;
+
+            data.forEach((p, i) => {
+                const rank = i + 1;
+                // ✅ BƯỚC 3 (tương tự): Dựng đường dẫn ảnh trực tiếp từ STT
+                const img = p.STT ? `photo/user${p.STT}.jpg` : 'photo/default-avatar.png';
+                const highlightClass = rank === 1 ? "gold" : rank === 2 ? "silver" : rank === 3 ? "bronze" : "";
+
+                tableHtml += `
+                <tr class="${highlightClass}">
+                  <td data-label="Hạng"><span><b>#${rank}</b></span></td>
+                  <td data-label="Thí sinh" class="user-cell">
+                    <div class="avatar"><img src="${img}" onerror="this.src='photo/default-avatar.png'"></div>
+                    <div class="info"><div class="name">${p["Họ tên"]}</div><div class="code">Mã CB: ${p["Mã CB"]}</div></div>
+                  </td>
+                  <td data-label="Đơn vị"><span>${p["Tên CN"] || ""}</span></td>
+                  ${JUDGES.map(j => {
+                      const s = p.scoresByJudge[j.id];
+                      const p1 = s?.part1 ?? '-';
+                      const p2 = s?.part2 ?? '-';
+                      return `<td data-label="${j.short} P.1"><span>${p1}</span></td><td data-label="${j.short} P.2" class="judge-divider"><span>${p2}</span></td>`;
+                  }).join('')}
+                </tr>`;
+            });
+
+            tableHtml += `</tbody></table></div>`;
+            return tableHtml;
         }
 
         async function fetchContestants(){const payload={action:"get_contestants"};const response=await fetch(MASTER_FLOW_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!response.ok)throw new Error('Không thể tải danh sách thí sinh');return await response.json()}async function fetchAllScores(){const payload={action:"get_all_scores"};const response=await fetch(MASTER_FLOW_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!response.ok)throw new Error('Không thể tải danh sách điểm');return await response.json()}async function exportToExcel(){const btn=document.getElementById("exportBtn");btn.disabled=true;btn.textContent="⏳ Đang xuất Excel...";try{const payload={action:"get_all_scores"};const res=await fetch(MASTER_FLOW_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});if(!res.ok)throw new Error("Không thể tải dữ liệu JSON từ Flow");const json=await res.json();if(!Array.isArray(json)||json.length===0){alert("⚠️ Không có dữ liệu để xuất Excel!");return}const allCriteria=new Set;json.forEach(item=>{try{const data=JSON.parse(item.JSONDATA||"{}");const details=data?.scores?.details||[];details.forEach(d=>allCriteria.add(d.criterion))}catch(e){}});const flattened=json.map(item=>{let parsed={};try{parsed=JSON.parse(item.JSONDATA||"{}")}catch{parsed={}}const details=parsed.scores?.details||[];const scoreMap={};details.forEach(d=>{scoreMap[d.criterion]=d.score});const row={REF:item.REF||"",BGKCHAM:item.BGKCHAM||parsed.judge||"",MACB:item.MACB||"",TENCB:item.TENCB||item.TenCB||"",CHINHANH:item.CHINHANH||"",PART:parsed.part||"",TOTAL:parsed.scores?.total||"",COMMENT:parsed.scores?.comment||"",SUBMISSION_TIME:parsed.submissionTimestamp||""};allCriteria.forEach(c=>{row[c]=scoreMap[c]||""});return row});const criteriaCols=Array.from(allCriteria);const baseCols=["REF","BGKCHAM","MACB","TENCB","CHINHANH","PART","TOTAL","COMMENT","SUBMISSION_TIME"];const finalCols=[...baseCols,...criteriaCols];const worksheet=XLSX.utils.json_to_sheet(flattened,{header:finalCols});const workbook=XLSX.utils.book_new();XLSX.utils.book_append_sheet(workbook,worksheet,"BangDiemChiTiet");const colWidths=finalCols.map(k=>({wch:Math.max(20,k.length+2)}));worksheet["!cols"]=colWidths;const excelBuffer=XLSX.write(workbook,{bookType:"xlsx",type:"array"});const blob=new Blob([excelBuffer],{type:"application/octet-stream"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="Bang_Diem_Chi_Tiet.xlsx";a.click();URL.revokeObjectURL(url);alert("✅ Xuất Excel thành công (đã bóc toàn bộ tiêu chí)!")}catch(err){console.error("❌ Lỗi export Excel:",err);alert("⚠️ Lỗi khi xuất Excel. Kiểm tra console để biết chi tiết.")}finally{btn.disabled=false;btn.textContent="⬇️ Xuất Excel"}}
